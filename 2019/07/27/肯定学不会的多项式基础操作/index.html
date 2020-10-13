@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="kf0coSwc0K">
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":"on","scrollpercent":"off","onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="终于颓废了一天把多项式写的好看了 本文主要是一个模板库，对多项式进行了封装 基础约定在本文中，多项式的相关运算里面，只说次数不说项数，次数表述较灵活，但如果涉及多项式取模，通常以 $ti$ 表示一个多项式的次数，$n$ 表示这个多项式的是在模 $x^n$ 有意义，其中除多项式加减乘转置以外，其他或多或少都有多项式取模存在，其中包括多项式求导和多项式积分">
+<meta name="keywords" content="多项式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="肯定学不会的多项式基础操作">
+<meta property="og:url" content="https://ctp314.github.io/2019/07/27/肯定学不会的多项式基础操作/index.html">
+<meta property="og:site_name" content="CTime_Pup_314">
+<meta property="og:description" content="终于颓废了一天把多项式写的好看了 本文主要是一个模板库，对多项式进行了封装 基础约定在本文中，多项式的相关运算里面，只说次数不说项数，次数表述较灵活，但如果涉及多项式取模，通常以 $ti$ 表示一个多项式的次数，$n$ 表示这个多项式的是在模 $x^n$ 有意义，其中除多项式加减乘转置以外，其他或多或少都有多项式取模存在，其中包括多项式求导和多项式积分">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-10-13T10:55:23.534Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="肯定学不会的多项式基础操作">
+<meta name="twitter:description" content="终于颓废了一天把多项式写的好看了 本文主要是一个模板库，对多项式进行了封装 基础约定在本文中，多项式的相关运算里面，只说次数不说项数，次数表述较灵活，但如果涉及多项式取模，通常以 $ti$ 表示一个多项式的次数，$n$ 表示这个多项式的是在模 $x^n$ 有意义，其中除多项式加减乘转置以外，其他或多或少都有多项式取模存在，其中包括多项式求导和多项式积分">
+
+
+
+
+
+
+  <link rel="canonical" href="https://ctp314.github.io/2019/07/27/肯定学不会的多项式基础操作/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>肯定学不会的多项式基础操作 | CTime_Pup_314</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CTime_Pup_314</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">不能再颓废了</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ctp314.github.io/2019/07/27/肯定学不会的多项式基础操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="CTime_Pup_314">
+      <meta itemprop="description" content="自闭">
+      <meta itemprop="image" content="/images/avatar.ico">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CTime_Pup_314">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">肯定学不会的多项式基础操作
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-27 10:33:42" itemprop="dateCreated datePublished" datetime="2019-07-27T10:33:42+08:00">2019-07-27</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-10-13 18:55:23" itemprop="dateModified" datetime="2020-10-13T18:55:23+08:00">2020-10-13</time>
+              
+            
+          </span>
+                        
+          
+          
+             
+                 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/模板/" itemprop="url" rel="index"><span itemprop="name">模板</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><del>终于颓废了一天把多项式写的好看了</del></p>
+<p>本文主要是一个模板库，对多项式进行了封装</p>
+<h2 id="基础约定"><a href="#基础约定" class="headerlink" title="基础约定"></a>基础约定</h2><p>在本文中，多项式的相关运算里面，只说次数不说项数，次数表述较灵活，但如果涉及多项式取模，通常以 $ti$ 表示一个多项式的次数，$n$ 表示这个多项式的是在模 $x^n$ 有意义，其中除多项式加减乘转置以外，其他或多或少都有多项式取模存在，其中包括多项式求导和多项式积分<br><a id="more"></a><br>在本文中，代码里面的多项式为大写，推导过程的多项式通常为小写，参数的多项式以 <code>A</code> 和 <code>B</code> 为主，其他以 <code>F</code> 和 <code>G</code> 为主</p>
+<p>在本文中，的多项式离散变换为 <code>NTT</code>，<code>NTT</code> 模数为 <code>998244353</code> 原根为 <code>3</code></p>
+<p>在本文中，所有多项式运算需要用到的自然数逆元已被预处理在 <code>inv</code> 数组里</p>
+<p>在本文中，对于加减乘模运算以外的其他运算，会先给出数学证明</p>
+<p>在本文中，多项式的次数包含零系数</p>
+<h2 id="Poly-类-与-加减运算"><a href="#Poly-类-与-加减运算" class="headerlink" title="Poly 类 与 加减运算"></a>Poly 类 与 加减运算</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Poly</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; _;</span><br><span class="line">    <span class="keyword">inline</span> <span class="keyword">int</span>&amp; <span class="keyword">operator</span> [] (<span class="keyword">int</span> i) &#123; <span class="keyword">return</span> _[i]; &#125; </span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">ti</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> _.size()<span class="number">-1</span>; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(<span class="keyword">int</span> ti)</span> </span>&#123; <span class="keyword">return</span> _.resize(ti+<span class="number">1</span>); &#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">rev</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> reverse(_.begin(), _.end()); &#125;</span><br><span class="line">&#125;;</span><br><span class="line">Poly <span class="keyword">operator</span> - (Poly A, Poly B)</span><br><span class="line">&#123;</span><br><span class="line">    A.<span class="built_in">set</span>(max(A.ti(), B.ti()));</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = B.ti(); ~i; --i) A[i] = A[i]-B[i]&lt;<span class="number">0</span>?A[i]-B[i]+P:A[i]-B[i];</span><br><span class="line">    <span class="keyword">return</span> A;</span><br><span class="line">&#125;</span><br><span class="line">Poly <span class="keyword">operator</span> + (Poly A, Poly B)</span><br><span class="line">&#123;</span><br><span class="line">    A.<span class="built_in">set</span>(max(A.ti(), B.ti()));</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = B.ti(); ~i; --i) A[i] = A[i]+B[i]&lt;P?A[i]+B[i]:A[i]+B[i]-P;</span><br><span class="line">    <span class="keyword">return</span> A;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>假设已声明 <code>Poly</code> 类变量 <code>F</code> 和 <code>G</code></p>
+<p><code>F[i]</code>：返回 <code>F._[i]</code> 的值，并且支持直接对 <code>F._[i]</code> 的修改，需要注意保证你访问的下标不超过当前 <code>F</code> 的次数</p>
+<p><code>F.ti()</code>：返回 <code>F</code> 的次数</p>
+<p><code>F.set(ti)</code>：重新设置 <code>F</code> 的次数，若 <code>ti</code> 小于当前次数则多余部分舍弃，大于则不足部分补 <code>0</code></p>
+<p><code>F.rev()</code>：将 <code>F</code> 转置，即 <code>F[i]</code> 变为 <code>F[n-i]</code></p>
+<p><code>F+G</code>：返回 <code>F</code> 与 <code>G</code> 的和，新的多项式的次数为两者中的较大值</p>
+<p><code>F-G</code>：返回 <code>F</code> 与 <code>G</code> 的差，新的多项式的次数为两者中的较大值</p>
+<h2 id="多项式离散变化"><a href="#多项式离散变化" class="headerlink" title="多项式离散变化"></a>多项式离散变化</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">int64 w[<span class="number">2</span>][N&lt;&lt;<span class="number">2</span>], inv[N&lt;&lt;<span class="number">2</span>];</span><br><span class="line"><span class="keyword">int</span> lim;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">prepare</span><span class="params">(<span class="keyword">int</span> ti)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(lim = <span class="number">1</span>; lim &lt;= ti; lim &lt;&lt;= <span class="number">1</span>);</span><br><span class="line">    w[<span class="number">0</span>][<span class="number">0</span>] = w[<span class="number">0</span>][lim] = w[<span class="number">1</span>][<span class="number">0</span>] = w[<span class="number">1</span>][lim] = <span class="number">1</span>;</span><br><span class="line">    int64 g = qpow(<span class="number">3</span>, (P<span class="number">-1</span>)/lim);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; lim; ++i)</span><br><span class="line">        w[<span class="number">1</span>][lim-i] = w[<span class="number">0</span>][i] = w[<span class="number">0</span>][i<span class="number">-1</span>]*g%P; </span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">NTT</span><span class="params">(Poly &amp;A, <span class="keyword">int</span> t)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!t) A.<span class="built_in">set</span>(lim<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>; i &lt; lim; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(i &gt; j) A[i] ^= A[j] ^= A[i] ^= A[j];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> k = lim&gt;&gt;<span class="number">1</span>; (j ^= k) &lt; k; k &gt;&gt;= <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> mid = <span class="number">1</span>; mid &lt; lim; mid &lt;&lt;= <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> len = mid&lt;&lt;<span class="number">1</span>, j = <span class="number">0</span>; j &lt; lim; j += len)</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>, p = <span class="number">0</span>, q = lim/len; k &lt; mid; ++k, p += q)</span><br><span class="line">            &#123;</span><br><span class="line">                int64 x = A[j+k], y = A[j+k+mid]*w[t][p]%P;</span><br><span class="line">                A[j+k] = x+y&lt;P?x+y:x+y-P;</span><br><span class="line">                A[j+k+mid] = x-y&lt;<span class="number">0</span>?x-y+P:x-y;</span><br><span class="line">            &#125;</span><br><span class="line">    <span class="keyword">if</span>(!t) <span class="keyword">return</span>; int64 v = inv[lim];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; lim; ++i) A[i] = A[i]*v%P;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>prepare(ti)</code>：对即将变换的 <code>ti</code> 次多项式<strong>项数</strong>扩展为后继 <code>2</code> 的整数次幂 <code>lim</code> ，并且对即将使用的单位根进行预处理，其中 <code>w[0][i]</code> 访问到的是 $3^{\frac{P-1}{lim}i}$，而 <code>w[1][i]</code> 访问到的是其逆元，两者关系可以由欧拉定理得出互为转置</p>
+<p>假设已声明 <code>Poly</code> 类变量 <code>F</code></p>
+<p><code>NTT(F, t)</code>：当 <code>t</code> 为 <code>0</code> 时，进行 <code>NTT</code>，这时需要一开始将 <code>F</code> 的次数设置为 <code>lim-1</code>；当 <code>t</code> 为 <code>1</code> 时，进行 <code>INTT</code>；此外在交换下标阶段省略 <code>rev</code> 数组，改用异或模拟加法，均摊 <code>O(n)</code>， <code>NTT</code> 的过程中通过累加循环变量 <code>p</code>，代替 <code>lim/len*k</code> 意外优化了很大的常数 </p>
+<h2 id="多项式乘运算"><a href="#多项式乘运算" class="headerlink" title="多项式乘运算"></a><a href="https://www.luogu.org/problem/P3803" target="_blank" rel="noopener">多项式乘运算</a></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Poly <span class="keyword">operator</span> * (Poly A, Poly B)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> n = A.ti(), m = B.ti();</span><br><span class="line">    <span class="keyword">if</span>(n &lt;= <span class="number">128</span>||m &lt;= <span class="number">128</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        Poly C; C.<span class="built_in">set</span>(n+m);</span><br><span class="line">        <span class="keyword">int</span> *c = &amp;C[<span class="number">0</span>], *a = &amp;A[<span class="number">0</span>], *b = &amp;B[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= n; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> *f = c+i; int64 x = a[i];</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= m; ++j)</span><br><span class="line">                f[j] = (f[j]+x*b[j]%P)%P;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> C;</span><br><span class="line">    &#125;</span><br><span class="line">    prepare(n+m), NTT(A, <span class="number">0</span>), NTT(B, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; lim; ++i) A[i] = <span class="number">1l</span>l*A[i]*B[i]%P;</span><br><span class="line">    NTT(A, <span class="number">1</span>), A.<span class="built_in">set</span>(n+m);</span><br><span class="line">    <span class="keyword">return</span> A;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>假设已声明 <code>Poly</code> 类变量 <code>F</code> 和 <code>G</code></p>
+<p><code>F*G</code>：返回 <code>F</code> 与 <code>G</code> 的积，新的多项式的次数为两者次数之和，其中 <code>F</code> 与 <code>G</code> 次数较小是采取朴素做法优化常数</p>
+<h2 id="多项式求逆"><a href="#多项式求逆" class="headerlink" title="多项式求逆"></a><a href="https://www.luogu.org/problem/P4238" target="_blank" rel="noopener">多项式求逆</a></h2><p>给定多项式 $f$ 我们要求出 $g$ 满足<br>$$<br>f\times g\equiv 1\ mod\ x^n<br>$$</p>
+<p>考虑倍增，假设我们已求出<br>$$<br>f\times g_{i-1}\equiv 1\ mod\ x^{\lceil\frac{n}{2}\rceil}<br>$$<br>现在要求出<br>$$<br>f\times g_i\equiv 1\ mod\ x^n<br>$$<br>显然<br>$$<br>f\times g_i\equiv 1\ mod\ x^{\lceil\frac{n}{2}\rceil}<br>$$<br>所以<br>$$<br>g_i-g_{i-1}\equiv 0\ mod\ x^{\lceil\frac{n}{2}\rceil}<br>$$<br>$$<br>(g_i-g_{i-1})^2\equiv 0\ mod\ x^n<br>$$<br>$$<br>f(g_i^2-2g_ig_{i-1}+g_{i-1}^2)\equiv 0\ mod\ x^n<br>$$<br>得到<br>$$<br>g_i\equiv 2g_{i-1}-fg_{i-1}^2\ mod\ x^n<br>$$<br>倍增求解即可</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Poly <span class="title">polyInv</span><span class="params">(Poly A, <span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Poly B; A.<span class="built_in">set</span>(n<span class="number">-1</span>), B.<span class="built_in">set</span>(n<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">1</span>) <span class="keyword">return</span> B[<span class="number">0</span>] = qpow(A[<span class="number">0</span>], P<span class="number">-2</span>), B;</span><br><span class="line">    B = polyInv(A, (n+<span class="number">1</span>)&gt;&gt;<span class="number">1</span>), prepare(n&lt;&lt;<span class="number">1</span>);</span><br><span class="line">    NTT(A, <span class="number">0</span>), NTT(B, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; lim; ++i) B[i] = (<span class="number">2l</span>l<span class="number">-1l</span>l*B[i]*A[i]%P+P)%P*B[i]%P;</span><br><span class="line">    NTT(B, <span class="number">1</span>), B.<span class="built_in">set</span>(n<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">return</span> B;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>假设已声明 <code>Poly</code> 类变量 <code>F</code></p>
+<p><code>polyInv(F, n)</code>：返回 <code>F</code> 在模意义下的逆元，需注意，<strong>每次 <code>A</code> 在运算时同样也需要先取模</strong></p>
+<h2 id="多项式带余除法"><a href="#多项式带余除法" class="headerlink" title="多项式带余除法"></a><a href="https://www.luogu.org/problem/P4512" target="_blank" rel="noopener">多项式带余除法</a></h2><p>给定 $n$ 次多项式 $f$ 和 $m$ 次多项式 $g$ 求出 $n-m$ 多项式 $q$ 和 $m-1$ 次多项式 $r$，满足</p>
+<p>$$<br>f\ =\ q\times g+r<br>$$</p>
+<p>将式子代换成</p>
+<p>$$<br>x^nf(\frac{1}{x})\ =\ x^{n-m}q(\frac{1}{x})\times x^{m}g(\frac{1}{x})+x^{n-m+1}x^{m-1}r(\frac{1}{x})<br>$$</p>
+<p>考虑 $f$ 的转置多项式 $f_r$ 满足 $[x^i]\ f_r\ =\ [x^{n-i}]\ f$ 的另外一种表述为 $f_r\ =\ x^n\ f(\frac{1}{x})$</p>
+<p>$$<br>f_r\ =\ q_r\times g_r+x^{n-m+1}r_r<br>$$</p>
+<p>发现在模 $x^{n-m+1}$ 的意义下余项的转置被消去，则有</p>
+<p>$$<br>f_r\ =\ q_r\times g_r\ mod\ x^{n-m+1}<br>$$</p>
+<p>所以</p>
+<p>$$<br>q_r\ =\ f_r\times g_r^{-1}\ mod\ x^{n-m+1}<br>$$</p>
+<p>求出 $q$ 之后 $r$ 就很容易求出</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Poly <span class="keyword">operator</span> / (Poly A, Poly B)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(A.ti() &lt; B.ti()) <span class="keyword">return</span> A.<span class="built_in">set</span>(<span class="number">0</span>), A;</span><br><span class="line">    <span class="keyword">int</span> n = A.ti(), m = B.ti(); </span><br><span class="line">    A.rev(), B.rev();</span><br><span class="line">    A = A*polyInv(B, n-m+<span class="number">1</span>), A.<span class="built_in">set</span>(n-m), A.rev();</span><br><span class="line">    <span class="keyword">return</span> A;</span><br><span class="line">&#125;</span><br><span class="line">Poly <span class="keyword">operator</span> % (Poly A, Poly B)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(A.ti() &lt; B.ti()) <span class="keyword">return</span> A;</span><br><span class="line">    A = A-(A/B)*B; A.<span class="built_in">set</span>(B.ti()<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">return</span> A;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>F/G</code>：返回 <code>F</code> 与 <code>G</code> 的商，新的多项式的次数为两者中的较大值</p>
+<p><code>F-G</code>：返回 <code>F</code> 与 <code>G</code> 的yu，新的多项式的次数为两者中的较大值</p>
+<h2 id="多项式求导和积分"><a href="#多项式求导和积分" class="headerlink" title="多项式求导和积分"></a>多项式求导和积分</h2><p>给定多项式 $f$ 我们要求出 $g$ 和 $h$ 满足<br>$$<br>g\equiv f’\ mod\ x^n<br>$$<br>$$<br>h\equiv \int f dx\ mod\ x^n<br>$$</p>
+<p>由幂函数求导法则 $x^n\to nx^{n-1}$ 和求导四则运算得</p>
+<p>$$<br>[x^n]\ g\ =\ [x^{n+1}]\ f\times n<br>$$</p>
+<p>由微分和积分互为逆运算得到</p>
+<p>$$<br>[x^n]\ h\ =\ [x^{n-1}]\ f\times \frac{1}{n}<br>$$</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Poly <span class="title">polyDer</span><span class="params">(Poly A, <span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    A.<span class="built_in">set</span>(n<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n<span class="number">-1</span>; ++i) A[i] = <span class="number">1l</span>l*(i+<span class="number">1</span>)*A[i+<span class="number">1</span>]%P; A[n<span class="number">-1</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> A;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">Poly <span class="title">polyInte</span><span class="params">(Poly A, <span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    A.<span class="built_in">set</span>(n<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = n<span class="number">-1</span>; i; --i) A[i] = inv[i]*A[i<span class="number">-1</span>]%P; A[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> A;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>假设已声明 <code>Poly</code> 类变量 <code>F</code></p>
+<p><code>polyDer(F, n)</code>：返回 <code>F</code> 在模意义下的导数，其次数由模数决定，特别地，只需要正常求导时，<code>n</code> 应该为 <code>F.ti()+1</code>，返回的仍是 <code>F.ti()</code> 次多项式</p>
+<p><code>polyInte(F, n)</code>：返回 <code>F</code> 在模意义下的积分，其次数由模数决定，特别地，只需要正常积分时，<code>n</code> 应该为 <code>F.ti()+2</code>，返回的是 <code>F.ti()+1</code> 次多项式</p>
+<h2 id="多项式对数函数"><a href="#多项式对数函数" class="headerlink" title="多项式对数函数"></a><a href="https://www.luogu.org/problem/P4238" target="_blank" rel="noopener">多项式对数函数</a></h2><p>给定多项式 $f$ 我们要求出 $g$ 满足<br>$$<br>g\equiv ln\ f\ mod\ x^n<br>$$</p>
+<p>两边同时求导再积回来就好了</p>
+<p>$$<br>g\equiv \int\frac{f’}{f}dx\ mod\ x^n<br>$$</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Poly <span class="title">polyLn</span><span class="params">(Poly A, <span class="keyword">int</span> n)</span> </span>&#123; <span class="keyword">return</span> polyInte(polyDer(A, n)*polyInv(A, n), n); &#125;</span><br></pre></td></tr></table></figure>
+<p>假设已声明 <code>Poly</code> 类变量 <code>F</code></p>
+<p><code>polyLn(F, n)</code>：返回 <code>F</code> 在模意义下的自然对数，其次数由模数决定</p>
+<h2 id="多项式指数函数-牛顿迭代"><a href="#多项式指数函数-牛顿迭代" class="headerlink" title="多项式指数函数 (牛顿迭代) "></a><a href="https://www.luogu.org/problem/P4726" target="_blank" rel="noopener">多项式指数函数 (牛顿迭代) </a></h2><p>给定多项式 $f$ 我们要求出 $g$ 满足<br>$$<br>g\equiv e^f\ mod\ x^n<br>$$</p>
+<p>首先，我们把牛顿迭代推广到多项式中，考虑</p>
+<p>给定多项式 $f$ 我们要求出 $g$ 满足<br>$$<br>f(g)\equiv 0\ mod\ x^n<br>$$</p>
+<p>那么就有</p>
+<p>$$<br>g_i\equiv g_{i-1}-\frac{f(g_{i-1})}{f’(g_{i-1})}\ mod\ x^n<br>$$</p>
+<p>倍增迭代即可</p>
+<p>另外，注意求导是 $g$ 关于 $f$ 求导，而不是 $x$ 关于 $f$ 求导</p>
+<p>在这指数函数中两边取对数移项得</p>
+<p>$$<br>ln\ g - f\equiv 0\ mod\ x^n<br>$$</p>
+<p>不妨把左侧看作关于 $g$ 得函数，那么我们实际上就是求出该多项式得零点，带入牛顿迭代式得</p>
+<p>$$<br>g_i\equiv g_{i-1}(1-ln\ g_{i-1}+f)\ mod\ x^n<br>$$</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Poly <span class="title">polyExp</span><span class="params">(Poly A, <span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Poly B; B.<span class="built_in">set</span>(n<span class="number">-1</span>), A.<span class="built_in">set</span>(n<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">1</span>) <span class="keyword">return</span> B[<span class="number">0</span>] = <span class="number">1</span>, B;</span><br><span class="line">    B = polyExp(A, (n+<span class="number">1</span>)&gt;&gt;<span class="number">1</span>), B.<span class="built_in">set</span>(n<span class="number">-1</span>), ++A[<span class="number">0</span>];</span><br><span class="line">    B = B*(A-polyLn(B, n)); B.<span class="built_in">set</span>(n<span class="number">-1</span>); </span><br><span class="line">    <span class="keyword">return</span> B;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>假设已声明 <code>Poly</code> 类变量 <code>F</code></p>
+<p><code>polyLn(F, n)</code>：返回 <code>F</code> 在模意义下的 <code>Exp</code> ，其次数由模数决定</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/多项式/" rel="tag"># 多项式</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/27/72709102-AGC005/" rel="next" title="72709102 AGC005">
+                <i class="fa fa-chevron-left"></i> 72709102 AGC005
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/01/10809102-NOIP模拟题/" rel="prev" title="10809102 NOIP模拟题">
+                10809102 NOIP模拟题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.ico" alt="CTime_Pup_314">
+            
+              <p class="site-author-name" itemprop="name">CTime_Pup_314</p>
+              <p class="site-description motion-element" itemprop="description">自闭</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">63</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cnblogs.com/wmq12138" title="https://cnblogs.com/wmq12138" rel="noopener" target="_blank">Robin12138</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wa-automaton.github.io/" title="https://wa-automaton.github.io/" rel="noopener" target="_blank">_WA自动机</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.franky.pro/" title="http://www.franky.pro/" rel="noopener" target="_blank">franky</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.luogu.org/blog/60150/" title="https://www.luogu.org/blog/60150/" rel="noopener" target="_blank">Betelgeuse_</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://williampetermatthew.github.io/" title="https://williampetermatthew.github.io/" rel="noopener" target="_blank">Peter_Matthew</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://micardi.coding.me" title="https://micardi.coding.me" rel="noopener" target="_blank">Micardi</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://syr_steven.coding.me" title="https://syr_steven.coding.me" rel="noopener" target="_blank">Steven7</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cs18.coding.me/" title="https://cs18.coding.me/" rel="noopener" target="_blank">cs18</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.zybuluo.com/Bei-S/note/1381469" title="https://www.zybuluo.com/Bei-S/note/1381469" rel="noopener" target="_blank">Yue-S</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://pb0207.github.io/" title="https://pb0207.github.io/" rel="noopener" target="_blank">pb0207</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.zybuluo.com/KirinBill/note/878927" title="https://www.zybuluo.com/KirinBill/note/878927" rel="noopener" target="_blank">KirinBill</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://fancypei.github.io/" title="https://fancypei.github.io/" rel="noopener" target="_blank">Fancy</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础约定"><span class="nav-number">1.</span> <span class="nav-text">基础约定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Poly-类-与-加减运算"><span class="nav-number">2.</span> <span class="nav-text">Poly 类 与 加减运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多项式离散变化"><span class="nav-number">3.</span> <span class="nav-text">多项式离散变化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多项式乘运算"><span class="nav-number">4.</span> <span class="nav-text">多项式乘运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多项式求逆"><span class="nav-number">5.</span> <span class="nav-text">多项式求逆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多项式带余除法"><span class="nav-number">6.</span> <span class="nav-text">多项式带余除法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多项式求导和积分"><span class="nav-number">7.</span> <span class="nav-text">多项式求导和积分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多项式对数函数"><span class="nav-number">8.</span> <span class="nav-text">多项式对数函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多项式指数函数-牛顿迭代"><span class="nav-number">9.</span> <span class="nav-text">多项式指数函数 (牛顿迭代) </span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CTime_Pup_314</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.0.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '4c6f1015a12ef165bf0e',
+    clientSecret: '7acc640fb3a34edc56b456fca5bbd92ae78f5692',
+    repo: 'ctp314.github.io',
+    owner: 'CTP314',
+    admin: ['CTP314'],
+    id: md5(location.pathname),
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+      for (i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow: auto hidden;
+}
+</style>
+
+    
+  
+
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'; 
+      }
+      else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function(i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap');
+      $(e).after($wrap);
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+        var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+          return $(e).text();
+        }).toArray().join('\n');
+        var ta = document.createElement('textarea');
+        var range = document.createRange(); //For Chrome
+        var sel = window.getSelection(); //For Chrome
+        var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+        ta.style.top = yPosition + 'px'; //Prevent page scroll
+        ta.style.position = 'absolute';
+        ta.style.opacity = '0';
+        ta.value = code;
+        ta.textContent = code; //For FireFox
+        ta.contentEditable = true;
+        ta.readOnly = false;
+        document.body.appendChild(ta);
+        range.selectNode(ta);
+        sel.removeAllRanges();
+        sel.addRange(range);
+        ta.setSelectionRange(0, code.length);
+        var result = document.execCommand('copy');
+        
+          if (result) $(this).text('复制成功');
+          else $(this).text('复制失败');
+        
+        ta.blur(); //For iOS
+        $(this).blur();
+      })).on('mouseleave', function(e) {
+        var $b = $(this).find('.copy-btn');
+        setTimeout(function() {
+          $b.text('复制');
+        }, 300);
+      }).append(e);
+    })
+  </script>
+
+
+</body>
+</html>

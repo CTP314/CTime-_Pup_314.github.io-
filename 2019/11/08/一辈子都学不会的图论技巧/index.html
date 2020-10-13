@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="kf0coSwc0K">
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":"on","scrollpercent":"off","onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="树的直径树的直径具有许多优美的性质，我们将在以下几题探讨 最长性与对称性树上一个点与其对应最长简单路径的另一端点一定是直径的端点，即直径的最长性，除此之外，直径上会存在中点，具有很好的对称性">
+<meta name="keywords" content="图论">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一辈子都学不会的图论技巧">
+<meta property="og:url" content="https://ctp314.github.io/2019/11/08/一辈子都学不会的图论技巧/index.html">
+<meta property="og:site_name" content="CTime_Pup_314">
+<meta property="og:description" content="树的直径树的直径具有许多优美的性质，我们将在以下几题探讨 最长性与对称性树上一个点与其对应最长简单路径的另一端点一定是直径的端点，即直径的最长性，除此之外，直径上会存在中点，具有很好的对称性">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-10-13T10:58:49.143Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一辈子都学不会的图论技巧">
+<meta name="twitter:description" content="树的直径树的直径具有许多优美的性质，我们将在以下几题探讨 最长性与对称性树上一个点与其对应最长简单路径的另一端点一定是直径的端点，即直径的最长性，除此之外，直径上会存在中点，具有很好的对称性">
+
+
+
+
+
+
+  <link rel="canonical" href="https://ctp314.github.io/2019/11/08/一辈子都学不会的图论技巧/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>一辈子都学不会的图论技巧 | CTime_Pup_314</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CTime_Pup_314</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">不能再颓废了</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ctp314.github.io/2019/11/08/一辈子都学不会的图论技巧/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="CTime_Pup_314">
+      <meta itemprop="description" content="自闭">
+      <meta itemprop="image" content="/images/avatar.ico">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CTime_Pup_314">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">一辈子都学不会的图论技巧
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-11-08 18:18:23" itemprop="dateCreated datePublished" datetime="2019-11-08T18:18:23+08:00">2019-11-08</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-10-13 18:58:49" itemprop="dateModified" datetime="2020-10-13T18:58:49+08:00">2020-10-13</time>
+              
+            
+          </span>
+                        
+          
+          
+             
+                 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/题解/" itemprop="url" rel="index"><span itemprop="name">题解</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="树的直径"><a href="#树的直径" class="headerlink" title="树的直径"></a>树的直径</h2><p>树的直径具有许多优美的性质，我们将在以下几题探讨</p>
+<h3 id="最长性与对称性"><a href="#最长性与对称性" class="headerlink" title="最长性与对称性"></a>最长性与对称性</h3><p>树上一个点与其对应最长简单路径的另一端点一定是直径的端点，即直径的最长性，除此之外，直径上会存在中点，具有很好的对称性<br><a id="more"></a></p>
+<h4 id="SDOI2011-消防"><a href="#SDOI2011-消防" class="headerlink" title="[SDOI2011]消防"></a><a href="https://www.luogu.org/problem/P2491" target="_blank" rel="noopener">[SDOI2011]消防</a></h4><p>我们找出树的直径 $\Gamma$ 则根据题意列出式子</p>
+<p>$$<br>\min\lbrace \max_{p_{u,v}\subseteq\Gamma,d_{u,v}\ge s}\lbrace \max_{i\in p}\lbrace f_i\rbrace,d_{u,\Gamma},d_{v,\Gamma}\rbrace\rbrace<br>$$</p>
+<p>其中 $f_i$ 表示不经过树的直径的最长长度，根据树的直径的最长性<br>$$<br>\max_{i\notin p,i\in\Gamma}\lbrace f_i\rbrace\le\min\lbrace d_{u,\Gamma},d_{v,\Gamma}\rbrace<br>$$</p>
+<p>所以中间部分可以修改上界，那么这道题直接用双指针维护即可</p>
+<h4 id="AGC005C-Tree-Restoring"><a href="#AGC005C-Tree-Restoring" class="headerlink" title="[AGC005C]Tree Restoring"></a><a href="https://www.luogu.org/problem/AT2061" target="_blank" rel="noopener">[AGC005C]Tree Restoring</a></h4><p>最大值一定为直径，最小值一定为树的半径，根据直径奇偶性就可以确定最小值个数，再根据非半径路径的对称性判断即可</p>
+<h4 id="AGC001C-Shorten-Diameter"><a href="#AGC001C-Shorten-Diameter" class="headerlink" title="[AGC001C]Shorten Diameter"></a><a href="https://www.luogu.org/problem/AT1981" target="_blank" rel="noopener">[AGC001C]Shorten Diameter</a></h4><p>枚举树的直径的中心，贪心构造即可</p>
+<h3 id="直径的合并"><a href="#直径的合并" class="headerlink" title="直径的合并"></a>直径的合并</h3><p>当合并两个联通块是，新的树的直径一定产生于原先两个树的直径的四个端点之中，当未指定合并方式时就可以通过控制连接点来构造我们想要的直径</p>
+<h4 id="雅礼集训-2017-Day5-远行"><a href="#雅礼集训-2017-Day5-远行" class="headerlink" title="[雅礼集训 2017 Day5]远行"></a><a href="https://loj.ac/problem/6038" target="_blank" rel="noopener">[雅礼集训 2017 Day5]远行</a></h4><p>动态维护树的直径的裸题，用 <code>LCT</code> 维护树上距离即可，不会 <code>LCT</code> 可以考虑启发式合并与倍增</p>
+<h4 id="TJOI2017-城市"><a href="#TJOI2017-城市" class="headerlink" title="[TJOI2017]城市"></a><a href="https://www.luogu.org/problem/P3761" target="_blank" rel="noopener">[TJOI2017]城市</a></h4><p>枚举断边，再重新连接两个直径的中点即可求出新树中的最小半径</p>
+<h3 id="多直径"><a href="#多直径" class="headerlink" title="多直径"></a>多直径</h3><p>这类问题通常会要求我们求出若干条边不相交或点不相交的链使得和最大</p>
+<h4 id="APIO2010-巡逻"><a href="#APIO2010-巡逻" class="headerlink" title="[APIO2010]巡逻"></a><a href="https://www.luogu.org/problem/P3629" target="_blank" rel="noopener">[APIO2010]巡逻</a></h4><p>这道题很明显要找出两条不相交的链使得其和最大，由于边权都为 $1$ 所以我们可以先求一边树的直径，再将直径上的边赋值为 $-1$ 再求一遍树的直径就可以处理出合法的贡献</p>
+<h4 id="51NOD-树的双直径"><a href="#51NOD-树的双直径" class="headerlink" title="[51NOD]树的双直径"></a><a href="http://www.51nod.com/Challenge/Problem.html#problemId=1812" target="_blank" rel="noopener">[51NOD]树的双直径</a></h4><p>这道题依旧是两条直径，但边权为整数，所以考虑改进求树的直径的 <code>DP</code>，维护每个点子树内外的最长链，最长直链，次长直链换根 <code>DP</code> 即可，注意让乘积最大，且边权有负数，所以还要维护最小值和次小值</p>
+<h4 id="八省联考2018-林克卡特树lct"><a href="#八省联考2018-林克卡特树lct" class="headerlink" title="[八省联考2018]林克卡特树lct"></a><a href="https://www.luogu.org/problem/P4383" target="_blank" rel="noopener">[八省联考2018]林克卡特树lct</a></h4><p>思考题，不作要求，要选出 $k$ 条直径，只能考虑直径的形态并用背包维护了，最后能发现凸性，用 <code>WQS</code> 二分即可</p>
+<h2 id="树的重心"><a href="#树的重心" class="headerlink" title="树的重心"></a>树的重心</h2><p>树的重心有很多好看的特性，我们将在以下几题探讨</p>
+<h3 id="折半性与极少性"><a href="#折半性与极少性" class="headerlink" title="折半性与极少性"></a>折半性与极少性</h3><p>根据树的重心定义，树的重心是树上所有点在其被出去后使剩下联通块最大值最小的点，很明显这个最大值最小值小于整棵树大小的一半，点分治就是利用这一原理简化复杂度</p>
+<p>并且，树的重心很少，最多不超过 $2$ 个，无根树哈希以及无根无编号树的计数问题就利用了这个特性</p>
+<h4 id="AGC018-Tree-and-Hamilton-Path"><a href="#AGC018-Tree-and-Hamilton-Path" class="headerlink" title="[AGC018]Tree and Hamilton Path"></a><a href="https://www.luogu.org/problem/AT2673" target="_blank" rel="noopener">[AGC018]Tree and Hamilton Path</a></h4><p>根据贪心问题的套路，我们盲猜一波答案的上界，单独考虑每条边的贡献，我们让每条边利用充分，则贡献为</p>
+<p>$$<br>\min(x,\ y)\times w<br>$$</p>
+<p>其中 $x$ 和 $y$ 是断掉这条边后树变成的两个联通块的大小</p>
+<p>考虑什么时候答案可以达到上界，我们注意到当树存在双重心时，我们让两个重心连边断开后剩下的两个联通块互相配对即可达到上界，这启发我们找到合适的边或点断开，使剩下联通块配对即可，根据集合配对的结论，配对集合的最大值不超过总大小的一半即可完成配对，所以我们找到重心即可，注意这是路径，所以最后需要减去一条边的贡献</p>
+<h4 id="CF1182D-Complete-Mirror"><a href="#CF1182D-Complete-Mirror" class="headerlink" title="[CF1182D]Complete Mirror"></a><a href="https://www.luogu.org/problem/CF1182D" target="_blank" rel="noopener">[CF1182D]Complete Mirror</a></h4><p>可以发现若选择的点度数大于 $2$ 必定是树的重心，否则以这个点为根时，各个子树大小都不平均，要么一定位于重心所在的长链上，画图很好证明，所以重心也暗含对称性</p>
+<p>我们也可用同样具有对称性的直径或树哈希解决此问题，细节留给读者思考</p>
+<h3 id="带权重心"><a href="#带权重心" class="headerlink" title="带权重心"></a>带权重心</h3><p>我们还可以定义重心为满足所有点到它距离和最小的点为树的重心，观察换根 <code>DP</code> 方程的转移，可以很明显发现这个定义与之前定义等价，当存在边权或点权，我们将重心扩展为带权重心</p>
+<h4 id="ZJOI2015-幻想乡战略游戏"><a href="#ZJOI2015-幻想乡战略游戏" class="headerlink" title="[ZJOI2015]幻想乡战略游戏"></a><a href="https://www.luogu.org/problem/P3345" target="_blank" rel="noopener">[ZJOI2015]幻想乡战略游戏</a></h4><p>思考题<del>由于没有找到在联赛范围的题</del>，动态维护带权重心，利用线段树在点分树上二分即可</p>
+<h3 id="重心的移动"><a href="#重心的移动" class="headerlink" title="重心的移动"></a>重心的移动</h3><p>当两个联通块合并时，树的重心一定位于原来两个联通块重心的连线上，结合带权重心的定义理解，若可以往外移动，则在未合并前就已经移动了</p>
+<h4 id="LG4299-首都"><a href="#LG4299-首都" class="headerlink" title="[LG4299] 首都"></a><a href="https://www.luogu.org/problem/P4299" target="_blank" rel="noopener">[LG4299] 首都</a></h4><p>合并时用 <code>LCT</code> 抽出连线，在 <code>Splay</code> 上二分移动即可</p>
+<h2 id="树的遍历序"><a href="#树的遍历序" class="headerlink" title="树的遍历序"></a>树的遍历序</h2><p>树的遍历序可以转化树上问题为序列上的偏序问题</p>
+<h3 id="DFS-序"><a href="#DFS-序" class="headerlink" title="DFS 序"></a>DFS 序</h3><p><code>DFS</code> 序最直接的利用应该就是重链剖分中把树转化为序列问题，和虚树中的利用，其中对应的实质是 <code>DFS</code> 序使子树连续，以及它的子序列所对应的联通块极大的性质</p>
+<h4 id="SDOI2015-寻宝游戏"><a href="#SDOI2015-寻宝游戏" class="headerlink" title="[SDOI2015]寻宝游戏"></a><a href="https://www.luogu.org/problem/P3320" target="_blank" rel="noopener">[SDOI2015]寻宝游戏</a></h4><p>用 <code>set</code> 动态维护 <code>DFS</code> 序子序列，就可以维护极大联通块</p>
+<h4 id="CF1225F-Tree-Factory"><a href="#CF1225F-Tree-Factory" class="headerlink" title="[CF1225F]Tree Factory"></a><a href="https://www.luogu.org/problem/CF1225F" target="_blank" rel="noopener">[CF1225F]Tree Factory</a></h4><p>很明显最后要求的就是树的一个 <code>DFS</code> 序，那么 <code>dfn</code> 中的第 $i$ 个点贡献为 $d_{dfn_{i-1}}-d_{fa_{dfn_i}}$ 显然最后走长链即可</p>
+<h3 id="BFS-序"><a href="#BFS-序" class="headerlink" title="BFS 序"></a>BFS 序</h3><p><code>BFS</code> 序不经常使用，最基础的一个性质是相邻两个节点要么为兄弟要么为父亲，且位于深度之差小于 $1$，可以在某些题优化做法</p>
+<h4 id="CF893F-Subtree-Minimum-Query"><a href="#CF893F-Subtree-Minimum-Query" class="headerlink" title="[CF893F]Subtree Minimum Query"></a><a href="https://www.luogu.org/problem/CF893F" target="_blank" rel="noopener">[CF893F]Subtree Minimum Query</a></h4><p>以 <code>BFS</code> 序为时间做可持久化线段树，维护 <code>DFS</code> 序信息，支持询问区间最值即可</p>
+<h2 id="树上统计信息"><a href="#树上统计信息" class="headerlink" title="树上统计信息"></a>树上统计信息</h2><p>对具有区间可减性的树上信息可以通过前缀和和差分高效维护，也可以通过考虑每条边或点的贡献高效统计</p>
+<h3 id="差分"><a href="#差分" class="headerlink" title="差分"></a>差分</h3><p>我们类比序列的差分，可以看出树也可以差分性质，树链<code>(u, v)</code> 的点权加即在 <code>u</code> 和 <code>v</code>添加贡献，<code>fa[lca(u, v)]</code> 和 <code>lca(u, v)</code> 减去贡献</p>
+<h4 id="LGP1600-天天爱跑步"><a href="#LGP1600-天天爱跑步" class="headerlink" title="[LGP1600]天天爱跑步"></a><a href="https://www.luogu.org/problem/P1600" target="_blank" rel="noopener">[LGP1600]天天爱跑步</a></h4><p>考虑每个点会被哪些路径产生贡献，显然对于路径 <code>(u, v)</code> 上行部分满足 $d_u=d_i+w_i$ 下行满足 $d_{u,v}-d_v=w_i-d_i$ 会产生贡献，树上差分用桶统计即可</p>
+<h3 id="前缀和"><a href="#前缀和" class="headerlink" title="前缀和"></a>前缀和</h3><p>类比序列的前缀和，我们也可以维护每个点到根的信息和</p>
+<h4 id="AGC014-Unplanned-Queries"><a href="#AGC014-Unplanned-Queries" class="headerlink" title="[AGC014]Unplanned Queries"></a><a href="https://www.luogu.org/problem/AT2374" target="_blank" rel="noopener">[AGC014]Unplanned Queries</a></h4><p>很明显我们只关注奇偶性，对每条链的统计实际上通过反向考虑前缀和等价于链的每个端点到根的奇偶性，在这个意义下树的形态就不重要了，所以随便找一种判断即可</p>
+<h3 id="贡献单独考虑"><a href="#贡献单独考虑" class="headerlink" title="贡献单独考虑"></a>贡献单独考虑</h3><h4 id="HAOI2015-树上染色"><a href="#HAOI2015-树上染色" class="headerlink" title="[HAOI2015]树上染色"></a><a href="https://www.luogu.org/problem/P3177" target="_blank" rel="noopener">[HAOI2015]树上染色</a></h4><p>题干中要求统计树上点对两两之间的距离所以很套路的就可以考虑每条边的贡献为两边黑点和白点数量的乘积，直接树上背包就好了</p>
+<h4 id="HAOI2018-苹果树"><a href="#HAOI2018-苹果树" class="headerlink" title="[HAOI2018]苹果树"></a><a href="https://www.luogu.org/problem/P4492" target="_blank" rel="noopener">[HAOI2018]苹果树</a></h4><p>同样是是求距离之和，所以我们只需要把大小作为状态转移即可，和这道题类似的计数题还有 <a href="https://www.luogu.org/problem/CF855G" target="_blank" rel="noopener">[CF855G]Harry Vs Voldemort</a> <del>需要大力分类讨论</del> 和 <a href="https://www.luogu.org/problem/P5206" target="_blank" rel="noopener">[WC2019]数树</a> <del>需要大力推式子</del></p>
+<h4 id="AGC005-Many-Easy-Problems"><a href="#AGC005-Many-Easy-Problems" class="headerlink" title="[AGC005]Many Easy Problems"></a><a href="https://www.luogu.org/problem/AT2064" target="_blank" rel="noopener">[AGC005]Many Easy Problems</a></h4><p>求大小之和，很自然地想到每个点会被多少个联通块算到，不妨设联通块大小为 $k$，删去一个点后剩下地联通块集合为 $S$ 则贡献为</p>
+<p>$$<br>\binom{n}{k}-\sum_{s\in S}\binom{s}{k}<br>$$</p>
+<p>直接统计复杂度为 $O(n^2)$ 所以还要搞一下答案生成函数，用 <code>NTT</code> 即可解决</p>
+<h2 id="图论建模"><a href="#图论建模" class="headerlink" title="图论建模"></a>图论建模</h2><p>一些人类智慧题可以通过建立图论模型解决</p>
+<h3 id="欧拉路"><a href="#欧拉路" class="headerlink" title="欧拉路"></a>欧拉路</h3><p>感觉自己就没做出来过欧拉路的题</p>
+<h4 id="AGC017-Jigsaw"><a href="#AGC017-Jigsaw" class="headerlink" title="[AGC017]Jigsaw"></a><a href="https://www.luogu.org/problem/AT2668" target="_blank" rel="noopener">[AGC017]Jigsaw</a></h4><p>当我们发现以每个积木作为点建图很难搞，考虑把积木当作边，对于每个积木而言左边若 $c=0$ 则当作编号为 $a$ 的点，否则为 $-c$，右边而言若 $d=0$ 则当作编号为 $-b$ 的点，否则为 $d$，积木本身作为连接两点的边，现在题目等价于求若干条不边相交的路径覆盖图的问题，且对于每条路径而言必须从编号为正的路径开始，编号为负的路径结束，所以编号为正的路径的出度必须大于等于入度，标号为负的路径入度必须大于出度，且对于每一个联通块而言入度和出度不能相等</p>
+<h3 id="二分图"><a href="#二分图" class="headerlink" title="二分图"></a>二分图</h3><p>这里重点强调的是二分的匹配问题</p>
+<h4 id="AGC018-Two-Trees"><a href="#AGC018-Two-Trees" class="headerlink" title="[AGC018]Two Trees"></a><a href="https://www.luogu.org/problem/AT2675" target="_blank" rel="noopener">[AGC018]Two Trees</a></h4><p>首先一个很明显的事实是，对于两棵树而言，若两个标号相同的点，他们子节点个数奇偶性必然相同，否则一定无解，接着我们考虑构造方案，首先我们把子节点个数为偶数的点的值赋值为零，其他节点赋值为 $1$ 或 $-1$，那么每颗子树一定有 $2k+1$ 个奇数点，我们把这些节点自底向上两两配对，不能配的上传到父亲，配对关系可以建图，这样每个点的度数为 $2$ 并且一条是在树 <code>A</code> 产生的边，另一条是在树 <code>B</code> 产生的边，一个点只有两者交替才能回到自己，所以图为二分图，可以产生匹配方案</p>
+<h3 id="有向无环图"><a href="#有向无环图" class="headerlink" title="有向无环图"></a>有向无环图</h3><p>一般在字典序问题或排列问题起到作用</p>
+<h4 id="AGC010-Rearranging"><a href="#AGC010-Rearranging" class="headerlink" title="[AGC010]Rearranging"></a><a href="https://www.luogu.org/problem/AT2306" target="_blank" rel="noopener">[AGC010]Rearranging</a></h4><p>互质的数不会交换，先后顺序不变，所以将互质的数之间连边，那么先手操作为给边定向，后手操作为求 <code>DAG</code> 的最大字典序，两遍贪心即可</p>
+<h4 id="AGC001-Wide-Swap"><a href="#AGC001-Wide-Swap" class="headerlink" title="[AGC001]Wide Swap"></a><a href="https://www.luogu.org/problem/AT1984" target="_blank" rel="noopener">[AGC001]Wide Swap</a></h4><p>首先题干中的条件有点复杂，我们不妨把排列的下标和值互换，这样最后求出字典序最小与原问题等价，发现这样题干中的交换条件就变为交换差值超过 $k$ 相邻两个数，那么差值不超过 $k$ 的一定不会交换，和上一题一样又转变为 <code>DAG</code> 字典序最小拓扑序问题，但这是 $O(n^2)$ 的建边，所以考虑优化，最终发现只需要向里当前点最近的连边即可</p>
+<h2 id="最小生成树"><a href="#最小生成树" class="headerlink" title="最小生成树"></a>最小生成树</h2><p>最小生成树我自己也不太会啊 QAQ</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/图论/" rel="tag"># 图论</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/13/LGR-060D1-小猪佩奇学数学/" rel="next" title="[LGR-060D1] 小猪佩奇学数学">
+                <i class="fa fa-chevron-left"></i> [LGR-060D1] 小猪佩奇学数学
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/01/30/CSGRound3-仙人掌-题解/" rel="prev" title="[[CSGRound3]仙人掌]题解">
+                [[CSGRound3]仙人掌]题解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.ico" alt="CTime_Pup_314">
+            
+              <p class="site-author-name" itemprop="name">CTime_Pup_314</p>
+              <p class="site-description motion-element" itemprop="description">自闭</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">63</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cnblogs.com/wmq12138" title="https://cnblogs.com/wmq12138" rel="noopener" target="_blank">Robin12138</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wa-automaton.github.io/" title="https://wa-automaton.github.io/" rel="noopener" target="_blank">_WA自动机</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.franky.pro/" title="http://www.franky.pro/" rel="noopener" target="_blank">franky</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.luogu.org/blog/60150/" title="https://www.luogu.org/blog/60150/" rel="noopener" target="_blank">Betelgeuse_</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://williampetermatthew.github.io/" title="https://williampetermatthew.github.io/" rel="noopener" target="_blank">Peter_Matthew</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://micardi.coding.me" title="https://micardi.coding.me" rel="noopener" target="_blank">Micardi</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://syr_steven.coding.me" title="https://syr_steven.coding.me" rel="noopener" target="_blank">Steven7</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cs18.coding.me/" title="https://cs18.coding.me/" rel="noopener" target="_blank">cs18</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.zybuluo.com/Bei-S/note/1381469" title="https://www.zybuluo.com/Bei-S/note/1381469" rel="noopener" target="_blank">Yue-S</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://pb0207.github.io/" title="https://pb0207.github.io/" rel="noopener" target="_blank">pb0207</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.zybuluo.com/KirinBill/note/878927" title="https://www.zybuluo.com/KirinBill/note/878927" rel="noopener" target="_blank">KirinBill</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://fancypei.github.io/" title="https://fancypei.github.io/" rel="noopener" target="_blank">Fancy</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#树的直径"><span class="nav-number">1.</span> <span class="nav-text">树的直径</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最长性与对称性"><span class="nav-number">1.1.</span> <span class="nav-text">最长性与对称性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SDOI2011-消防"><span class="nav-number">1.1.1.</span> <span class="nav-text">[SDOI2011]消防</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AGC005C-Tree-Restoring"><span class="nav-number">1.1.2.</span> <span class="nav-text">[AGC005C]Tree Restoring</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AGC001C-Shorten-Diameter"><span class="nav-number">1.1.3.</span> <span class="nav-text">[AGC001C]Shorten Diameter</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#直径的合并"><span class="nav-number">1.2.</span> <span class="nav-text">直径的合并</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#雅礼集训-2017-Day5-远行"><span class="nav-number">1.2.1.</span> <span class="nav-text">[雅礼集训 2017 Day5]远行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TJOI2017-城市"><span class="nav-number">1.2.2.</span> <span class="nav-text">[TJOI2017]城市</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多直径"><span class="nav-number">1.3.</span> <span class="nav-text">多直径</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#APIO2010-巡逻"><span class="nav-number">1.3.1.</span> <span class="nav-text">[APIO2010]巡逻</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#51NOD-树的双直径"><span class="nav-number">1.3.2.</span> <span class="nav-text">[51NOD]树的双直径</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#八省联考2018-林克卡特树lct"><span class="nav-number">1.3.3.</span> <span class="nav-text">[八省联考2018]林克卡特树lct</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#树的重心"><span class="nav-number">2.</span> <span class="nav-text">树的重心</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#折半性与极少性"><span class="nav-number">2.1.</span> <span class="nav-text">折半性与极少性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AGC018-Tree-and-Hamilton-Path"><span class="nav-number">2.1.1.</span> <span class="nav-text">[AGC018]Tree and Hamilton Path</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CF1182D-Complete-Mirror"><span class="nav-number">2.1.2.</span> <span class="nav-text">[CF1182D]Complete Mirror</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#带权重心"><span class="nav-number">2.2.</span> <span class="nav-text">带权重心</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ZJOI2015-幻想乡战略游戏"><span class="nav-number">2.2.1.</span> <span class="nav-text">[ZJOI2015]幻想乡战略游戏</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重心的移动"><span class="nav-number">2.3.</span> <span class="nav-text">重心的移动</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#LG4299-首都"><span class="nav-number">2.3.1.</span> <span class="nav-text">[LG4299] 首都</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#树的遍历序"><span class="nav-number">3.</span> <span class="nav-text">树的遍历序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DFS-序"><span class="nav-number">3.1.</span> <span class="nav-text">DFS 序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SDOI2015-寻宝游戏"><span class="nav-number">3.1.1.</span> <span class="nav-text">[SDOI2015]寻宝游戏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CF1225F-Tree-Factory"><span class="nav-number">3.1.2.</span> <span class="nav-text">[CF1225F]Tree Factory</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BFS-序"><span class="nav-number">3.2.</span> <span class="nav-text">BFS 序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CF893F-Subtree-Minimum-Query"><span class="nav-number">3.2.1.</span> <span class="nav-text">[CF893F]Subtree Minimum Query</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#树上统计信息"><span class="nav-number">4.</span> <span class="nav-text">树上统计信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#差分"><span class="nav-number">4.1.</span> <span class="nav-text">差分</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#LGP1600-天天爱跑步"><span class="nav-number">4.1.1.</span> <span class="nav-text">[LGP1600]天天爱跑步</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前缀和"><span class="nav-number">4.2.</span> <span class="nav-text">前缀和</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AGC014-Unplanned-Queries"><span class="nav-number">4.2.1.</span> <span class="nav-text">[AGC014]Unplanned Queries</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#贡献单独考虑"><span class="nav-number">4.3.</span> <span class="nav-text">贡献单独考虑</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#HAOI2015-树上染色"><span class="nav-number">4.3.1.</span> <span class="nav-text">[HAOI2015]树上染色</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HAOI2018-苹果树"><span class="nav-number">4.3.2.</span> <span class="nav-text">[HAOI2018]苹果树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AGC005-Many-Easy-Problems"><span class="nav-number">4.3.3.</span> <span class="nav-text">[AGC005]Many Easy Problems</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图论建模"><span class="nav-number">5.</span> <span class="nav-text">图论建模</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#欧拉路"><span class="nav-number">5.1.</span> <span class="nav-text">欧拉路</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AGC017-Jigsaw"><span class="nav-number">5.1.1.</span> <span class="nav-text">[AGC017]Jigsaw</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二分图"><span class="nav-number">5.2.</span> <span class="nav-text">二分图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AGC018-Two-Trees"><span class="nav-number">5.2.1.</span> <span class="nav-text">[AGC018]Two Trees</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有向无环图"><span class="nav-number">5.3.</span> <span class="nav-text">有向无环图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AGC010-Rearranging"><span class="nav-number">5.3.1.</span> <span class="nav-text">[AGC010]Rearranging</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AGC001-Wide-Swap"><span class="nav-number">5.3.2.</span> <span class="nav-text">[AGC001]Wide Swap</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最小生成树"><span class="nav-number">6.</span> <span class="nav-text">最小生成树</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CTime_Pup_314</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.0.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '4c6f1015a12ef165bf0e',
+    clientSecret: '7acc640fb3a34edc56b456fca5bbd92ae78f5692',
+    repo: 'ctp314.github.io',
+    owner: 'CTP314',
+    admin: ['CTP314'],
+    id: md5(location.pathname),
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+      for (i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow: auto hidden;
+}
+</style>
+
+    
+  
+
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'; 
+      }
+      else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function(i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap');
+      $(e).after($wrap);
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+        var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+          return $(e).text();
+        }).toArray().join('\n');
+        var ta = document.createElement('textarea');
+        var range = document.createRange(); //For Chrome
+        var sel = window.getSelection(); //For Chrome
+        var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+        ta.style.top = yPosition + 'px'; //Prevent page scroll
+        ta.style.position = 'absolute';
+        ta.style.opacity = '0';
+        ta.value = code;
+        ta.textContent = code; //For FireFox
+        ta.contentEditable = true;
+        ta.readOnly = false;
+        document.body.appendChild(ta);
+        range.selectNode(ta);
+        sel.removeAllRanges();
+        sel.addRange(range);
+        ta.setSelectionRange(0, code.length);
+        var result = document.execCommand('copy');
+        
+          if (result) $(this).text('复制成功');
+          else $(this).text('复制失败');
+        
+        ta.blur(); //For iOS
+        $(this).blur();
+      })).on('mouseleave', function(e) {
+        var $b = $(this).find('.copy-btn');
+        setTimeout(function() {
+          $b.text('复制');
+        }, 300);
+      }).append(e);
+    })
+  </script>
+
+
+</body>
+</html>
