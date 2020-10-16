@@ -20,17 +20,20 @@
     var CONFIG = {"hostname":"ctp314.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="自闭">
+  <meta name="description" content="题目描述你已被 $\text{Addictive  Coin Machines}$ 聘用去帮助设计风靡全球赌场弹球盘系列的下一款夺人眼球，一本万利，让玩家不能自拔的热门产品。 玩弹球盘需要将球发射到存在着钉子，障碍和靶子的网格中。球会在网格间反弹，直到击中任意一个靶子。玩家会根据击中的靶子获得相应的得分。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[WF2014H]Pachinko">
 <meta property="og:url" content="https://ctp314.github.io/2020/10/14/WF2014H-Pachinko/index.html">
 <meta property="og:site_name" content="CTime_Pup_314">
-<meta property="og:description" content="自闭">
+<meta property="og:description" content="题目描述你已被 $\text{Addictive  Coin Machines}$ 聘用去帮助设计风靡全球赌场弹球盘系列的下一款夺人眼球，一本万利，让玩家不能自拔的热门产品。 玩弹球盘需要将球发射到存在着钉子，障碍和靶子的网格中。球会在网格间反弹，直到击中任意一个靶子。玩家会根据击中的靶子获得相应的得分。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ctp314.github.io/.io//%5CWF2014H-Pachinko%5Ca.jpg">
+<meta property="og:image" content="https://ctp314.github.io/.io//%5CWF2014H-Pachinko%5Cb.jpg">
 <meta property="article:published_time" content="2020-10-14T03:01:58.000Z">
-<meta property="article:modified_time" content="2020-10-14T03:14:56.928Z">
+<meta property="article:modified_time" content="2020-10-16T00:51:08.117Z">
 <meta property="article:author" content="CTime_Pup_314">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ctp314.github.io/.io//%5CWF2014H-Pachinko%5Ca.jpg">
 
 <link rel="canonical" href="https://ctp314.github.io/2020/10/14/WF2014H-Pachinko/">
 
@@ -216,10 +219,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-10-14 11:01:58 / 修改时间：11:14:56" itemprop="dateCreated datePublished" datetime="2020-10-14T11:01:58+08:00">2020-10-14</time>
+              <time title="创建时间：2020-10-14 11:01:58" itemprop="dateCreated datePublished" datetime="2020-10-14T11:01:58+08:00">2020-10-14</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-16 08:51:08" itemprop="dateModified" datetime="2020-10-16T08:51:08+08:00">2020-10-16</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -262,7 +271,41 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>你已被 $\text{Addictive  Coin Machines}$ 聘用去帮助设计风靡全球赌场弹球盘系列的下一款夺人眼球，一本万利，让玩家不能自拔的热门产品。</p>
+<p>玩弹球盘需要将球发射到存在着钉子，障碍和靶子的网格中。球会在网格间反弹，直到击中任意一个靶子。玩家会根据击中的靶子获得相应的得分。</p>
+<a id="more"></a>
+<p>下一款弹球盘的网格布局已经设计好了，但是靶子的分值尚未分配。这些分值必须被精心设置，以便像所有赌场设备一样，该游戏是有利可图的，又不至于<em>过于</em>有利可图。因此，弄清楚一个球击中任意特定靶子的概率非常重要。这就是你的工作！</p>
+<p>为简单起见，网格被当作一个高矩形，其中有开放的格间（每个用 ‘.’ 表示），不能穿过的障碍（每个用 ‘X’ 表示）以及靶子 （每个用 ‘T’ 表示）。</p>
+<p>球会被均匀随机地发射到网格第一层开放的格间中。从那时起，与钉子的碰撞会使以给定概率向上，向下，向左或向右反弹。为简单起见，假定网格中每个格间的这些概率都是对应相等的。如果球反弹到障碍物或试图弹出网格，则球实际上只会停留在原地再次与钉子碰撞。当球击中靶子时，游戏则会立即结束。</p>
+<p>你可以放心假定，在击中靶子以前，球到达的平均格间数量不会超过 $10^9$。如果球一直在弹来弹去，这就不是一款好玩的游戏了。</p>
+<p>对于每一个靶子，计算它被发射的球击中的概率。</p>
+<h3 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h3><p>输入只包含一组测试用例。第一行包含整数 $w$ 和 $h$，分别是弹球盘网格的宽和高（$1\le w\le 20$ 且 $2\le h \le 10\ 000$）。下一行包含和为  $100$ 的四个非负整数 $u,d,l$ 和 $r$，分别为在任意一个开放格间中，向上、向下、向左或向右反弹的百分比概率。</p>
+<p>接下来 $h$ 行每一行包含 $w$ 个字符，每个字符是 ‘.’，‘X’，和 ‘T’ 三者之一。这些行描述了弹球盘的网格布局。第一行描述了网格第一层的情况，包含了至少一个 ‘.’ 且不含 ‘T’。</p>
+<h3 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h3><p>对于每一个网格中的 ‘T’ 按照从上到下，若在同一行则按从左到右的顺序输出被球击中的概率。输出答案与标准答案的绝对误差最多为 $10^{-6}$。</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>首先直接 dp 是不行的，因为题干中没有拓扑序进行后效性的转移。我们不妨设第一列有 $c$ 个开放格间，我们不妨考虑将题目转化为第一行的开放格间每个有 $\dfrac{1}{c}$ 的贡献，其余开放格间有 $0$ 的贡献，求靶子被击中时球获得贡献的期望，因为原题虽然让求出概率，但这样会有诸多限制，并且在非靶子节点的概率会定义不清，所以改为直接求期望更合适。</p>
+<p>这样就变成了图的随机游走模型，我们设整体矩形区域为对角线端点为 $(0,0)$ 和 $(h-1,w-1)$ 的矩形区域 $A$，$f_{(i,j)}$ 表示到达 $(i,j)$ 这个格间的期望，$(i,j)$ 上的字符为 $s_{(i,j)}$，向上，向下，向左，向右的位移向量依次是 $v_0$ 到 $v_3$。通过分类讨论，很容易列出方程：</p>
+<p>首先，当 $s_{(i,j)}=\text{‘X’}$ 时，$(i,j)$ 无法到达，$f_{(i,j)}$ 无定义。</p>
+<p>之后有，</p>
+<p>$$ f_{(i,j)}\ = \sum_{k=0}^{3}\<br>\begin{cases}<br>p_{v_{k\oplus 1}}f_{(i,j)+v_k}&amp;(i,j)+v_k\notin A\land s_{(i,j)+v_k=‘.’}\\<br>p_{v_k}f_{(i,j)}&amp;((i,j)+v_k\notin A\lor s_{(i,j)+v_k}=‘\text{X}’)\land s_{(i,j)=‘.’}\\<br>0&amp;\text{otherwise}<br>\end{cases}<br>$$</p>
+<p>之后就会有 $wh$ 个线性方程组，直接用高斯消元求解则为 $O((wh)^3)$。考虑优化，我们不难发现这个矩阵十分稀疏，更具体的，若设 $f_{(i,j)}$ 对应未知数 $x_{wi+j}$ 那么对于第 $x_{wi+j}$ 个方程，它包含的未知数的下标范围即为 $[w(i-1)+j,w(i+1)+j]$，最终高斯消元矩阵的有效部分形态如图所示。</p>
+<div align="center">
+
+<p><img src="/.io//%5CWF2014H-Pachinko%5Ca.jpg"></p>
+</div>
+
+<p>我们会发现每次我们对第 $i$ 行只需要进行一个大小为 $w\times w$ 的有效矩阵的消元即可，单次复杂度为 $O(w^2)$，总复杂度为 $O(hw^3)$。</p>
+<p>然而有一种情况需要特殊考虑，即处理第 $i$ 行时，矩阵 $(i,i)$ 的值已经为 $0$ 了，如果按照常规的高斯消元，现在需要做的是交换行，在这里也是同理，如图：</p>
+<div align="center">
+
+<p><img src="/.io//%5CWF2014H-Pachinko%5Cb.jpg"></p>
+</div>
+
+<p>这是已经遇到 $2$ 次该情况，而现在处理黄色行 $i$ 时又遇到了 $(i,i)$ 为 $0$ 的情况，这是我们遍历 $[i-w,i+w]$ 的每一行，若发现一个灰色行，即已经在之前已经被处理过的直接跳过，若遇到一个红色行 $p$，满足 $(p,i)$ 不为 $0$，则把 $p$ 行当作当前处理的行，这时要用 $p$ 行的 $[i,p+w]$ 对 $[p+1,i+w]$ 行进行消元。若不存在符合条件的 $p$，则说明从题干的角度看 $(\lfloor\dfrac{i}{w}\rfloor,i\mod w)$ 不可达，或者无法到达靶子格间，从矩阵的角度看这一行无解或者有无穷多的解。</p>
+<p>但实际上还有一种特殊情况未考虑，即考虑如下数据：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">2 4</span><br><span class="line">20 40 0 40</span><br><span class="line">.X</span><br><span class="line">..</span><br><span class="line">.X</span><br><span class="line">.T</span><br></pre></td></tr></table></figure>
+
+<p>对于位于 $(1,1)$ 的点来说，只要进入这个点就再也走不出去了，期望在这里没有定义，但是这与通过一开始分类讨论得到方程 $0=\frac{2}{5}f_{(1,0)}$ 这是矛盾的，所以我们要对这样的方程进行调整，通过连通性特判这种情况，或者是令方程中由于移向做差让系数变为 $0$ 的 $f_{(1,1)}$ 的系数调整一个很小的实数，由于该点出不去，所以也无法对其他点造成影响，也恰好印证了题干中的假设，经过的房间平均个数不超过 $10^9$。</p>
+
     </div>
 
     
@@ -340,6 +383,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">输入格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">输出格式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number"></span> <span class="nav-text">题解</span></a></div>
       </div>
       <!--/noindex-->
 
