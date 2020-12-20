@@ -191,6 +191,103 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ctp314.github.io/2019/07/15/LUOGU4859-%E5%B7%B2%E7%BB%8F%E6%B2%A1%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E5%AE%B3%E6%80%95%E7%9A%84%E4%BA%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.ico">
+      <meta itemprop="name" content="CTime_Pup_314">
+      <meta itemprop="description" content="自闭">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CTime_Pup_314">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/15/LUOGU4859-%E5%B7%B2%E7%BB%8F%E6%B2%A1%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E5%AE%B3%E6%80%95%E7%9A%84%E4%BA%86/" class="post-title-link" itemprop="url">[LUOGU4859]已经没有什么好害怕的了</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-15 14:58:28" itemprop="dateCreated datePublished" datetime="2019-07-15T14:58:28+08:00">2019-07-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-13 19:12:10" itemprop="dateModified" datetime="2020-10-13T19:12:10+08:00">2020-10-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index"><span itemprop="name">题解</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%A8%A1%E6%9D%BF/" itemprop="url" rel="index"><span itemprop="name">模板</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/07/15/LUOGU4859-%E5%B7%B2%E7%BB%8F%E6%B2%A1%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E5%AE%B3%E6%80%95%E7%9A%84%E4%BA%86/" class="post-meta-item leancloud_visitors" data-flag-title="[LUOGU4859]已经没有什么好害怕的了" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="题面描述"><a href="#题面描述" class="headerlink" title="题面描述"></a>题面描述</h2><p>给定集合 $A$ 和 $B$，求完全匹配满足 $\sum[a_i&gt;b_i]-[a_i\le b_i]=k$ 的方案数</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>首先，题意即是要求匹配满足 $\sum[a_i&gt;b_i]=\frac{n+k}{2}$ 的方案数，假设状态 $h_{i,j}$ 表示前 $i$ 个 匹配满足 $\sum[a_k&gt;b_k]=j$ 的方案数</p>
+<p>考虑转移的顺序，发现对于当前决策$a_k&gt;b_k$而言，必须考虑当前状态下有多少满足的 $b_k$，这就要求我们一开始把两者排序，则当前符合决策的 $b_k$ 必定有 $j$ 个已选，即有转移</p>
+<p>$$<br>h_{i,j}\ =\ h_{i-1,j}+h_{i-1,j-1}\times(less_i-(j-1))<br>$$</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/07/15/LUOGU4859-%E5%B7%B2%E7%BB%8F%E6%B2%A1%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E5%AE%B3%E6%80%95%E7%9A%84%E4%BA%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://ctp314.github.io/2019/07/13/HNOI2013-%E6%B8%B8%E8%B5%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1028,99 +1125,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://ctp314.github.io/2019/07/04/%E5%8D%81%E4%BA%8C%E7%9C%81%E8%81%94%E8%80%832019-%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%97%AE%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.ico">
-      <meta itemprop="name" content="CTime_Pup_314">
-      <meta itemprop="description" content="自闭">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CTime_Pup_314">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/04/%E5%8D%81%E4%BA%8C%E7%9C%81%E8%81%94%E8%80%832019-%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">[十二省联考2019]字符串问题</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-04 22:33:38" itemprop="dateCreated datePublished" datetime="2019-07-04T22:33:38+08:00">2019-07-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-13 18:56:37" itemprop="dateModified" datetime="2020-10-13T18:56:37+08:00">2020-10-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index"><span itemprop="name">题解</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2019/07/04/%E5%8D%81%E4%BA%8C%E7%9C%81%E8%81%94%E8%80%832019-%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%97%AE%E9%A2%98/" class="post-meta-item leancloud_visitors" data-flag-title="[十二省联考2019]字符串问题" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定子串集合 $A$ 和 $B$，和支配关系，构造最长目标串满足由 $A$ 构成，对于相邻 $A$，后一个存在前缀为 $B$，且被 $A$ 支配</p>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>很明显，这道题的目的是优化建图，由于在练习 $SAM$，所以就不考虑 $SA$ 了</p>
-<p>对于原串建一颗后缀树，发现题目中的建边正好是对于后缀树子树的连边，直接 $DFS$ 序搞一下线段树优化建图跑个拓扑就行了</p>
-<p>但注意，对于倍增向上跳的节点对于后 $20$ 分不完全合法，只向部分连边，所以当时口胡的做法是每个节点按长度在排个序，再搞一次线段树优化建图就行了</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/07/04/%E5%8D%81%E4%BA%8C%E7%9C%81%E8%81%94%E8%80%832019-%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%97%AE%E9%A2%98/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1192,7 +1196,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">64</span>
+          <span class="site-state-item-count">65</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
