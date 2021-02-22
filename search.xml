@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>循环、模、单位根的思考</title>
+    <url>/2021/02/22/%E5%BE%AA%E7%8E%AF%E3%80%81%E6%A8%A1%E3%80%81%E5%8D%95%E4%BD%8D%E6%A0%B9%E7%9A%84%E6%80%9D%E8%80%83/</url>
+    <content><![CDATA[<p>今天用多项式的角度重新审视 <code>[六省联考2017]组合数问题</code> 这道题。</p>
+<p>题干要求</p>
+<p>$$<br>\sum_{i\mod k=r}\dbinom{nk}{i}<br>$$</p>
+<p>的值。</p>
+<a id="more"></a>
+<p>前年做这一道题是直接看了题解，通过找与之等价的组合意义完成的，现在让我们重新做一遍。</p>
+<p>很容易化简得到</p>
+<p>$$<br>\sum_{i\mod k=r}\lbrack x^i\rbrack(1+x)^{nk}<br>$$</p>
+<p>现在看来这个式子意义十分显然，即 $(1+x)^{nk}$ 做 $k$ 循环卷积即可。关于循环卷积运算，一直以来有对其正确性的疑问，但现在似乎是搞明白了。</p>
+<p>假设 $D_k$ 是对多项式进行约化的算子，即 </p>
+<p>$$<br>D_k(f)=\sum_i([x^i]f)x^{i\mod k}<br>$$</p>
+<p>而 $\circ$ 表示循环卷积的算符，很容易验证其对 $+$ 有分配律。</p>
+<p>下面讨论命题</p>
+<p>$$<br>D_k(f\times g)=D_k(f)\circ D_k(g)<br>$$</p>
+<p>的正确性。</p>
+<p>我们对左式展开</p>
+<p>$$<br>\begin{aligned}<br>D_k(f\times g)&amp;=\sum_i([x^i](f\times g))x^{i\mod k}\\<br>&amp;=\sum_a\sum_b([x^a]f\times[x^b]g)x^{a+b\mod k}\\<br>&amp;=\sum_a ([x^a]f)x^{a\mod k}\circ \sum_{b}([x^b]f)x^{b\mod k}\\<br>&amp;=D_k(f)\circ D_k(g)<br>\end{aligned}<br>$$</p>
+<p>而今天看到 $\mathrm{jiangly}$ 对 $D_k$ 有另外的表述即</p>
+<p>$$<br>D_k(f)=f\mod x^k-1<br>$$</p>
+<p>这是我第一次见到这样的表述，题解没有细说，它的正确性我口胡了一个证明。</p>
+<p>容易验证多项式模运算与整数模运算性质类似，我们不妨考虑 $x^n\mod x^k-1$ 的值，显然有</p>
+<p>$$<br>x^n=(\sum_{i=1}^{\lfloor\frac{n}{k}\rfloor}x^{n-ik})(x^k-1)+x^{n\mod k}<br>$$</p>
+<p>即 $x^n\equiv x^{n\mod k}\mod x^k-1$ 。</p>
+<p>所以对最开始命题的正确性可以用 $\mod x^k-1$ 相关运算的性质来说明。</p>
+<p>另外，在看到这道题时，还有一个思路就是单位根反演，即</p>
+<p>$$<br>[n|k]=\dfrac{1}{n}\sum_{i=0}^{n-1}\omega_n^{ik}<br>$$</p>
+<p>我们将此式联系题目，即</p>
+<p>$$<br>\begin{aligned}<br>\mathbf{Ans}&amp;=\sum_{r=0}^{k-1}\sum_{i}[k|i-r]\lbrack x^i\rbrack(1+x)^{nk}\\<br>&amp;=\dfrac{1}{k}\sum_{r=0}^{k-1}\sum_{i}\sum_{j=0}^{k-1}\omega_k^{(i-r)j}\lbrack x^i\rbrack(1+x)^{nk}\\<br>&amp;=\dfrac{1}{k}\sum_{r=0}^{k-1}\sum_{j=0}^{k-1}\omega_{k}^{-rj}\sum_{i}\omega_k^{ij}\lbrack x^i\rbrack(1+x)^{nk}\\<br>&amp;=\dfrac{1}{k}\sum_{r=0}^{k-1}\sum_{j=0}^{k-1}\omega_{k}^{-rj}(1+\omega_k^j)^{nk}\\<br>&amp;=\mathbf{IDFT}_k[\mathbf{DFT}_k[(1+x)^{nk}]]<br>\end{aligned}<br>$$</p>
+<p>换句话说 $\mathbf{IDFT}_k[\mathbf{DFT}_k[·]]=D_k(·)$</p>
+]]></content>
+      <categories>
+        <category>研究</category>
+      </categories>
+  </entry>
+  <entry>
     <title>CFR691D2 题解</title>
     <url>/2020/12/20/CFR691D2-%E9%A2%98%E8%A7%A3/</url>
     <content><![CDATA[<h2 id="CF1459E-Latin-Square"><a href="#CF1459E-Latin-Square" class="headerlink" title="CF1459E Latin Square"></a><a href="https://codeforces.com/contest/1459/problem/E">CF1459E Latin Square</a></h2><p>把矩形抽象为 $(x,y,z)$ 意思为 $A_{x,y}=z$ 这样位移操作就对应 $X$ 轴或 $Y$ 轴的加减，求逆操作就对应 $X$ 轴或 $Y$ 轴与 $Z$ 轴的交换，我们对于最初的每一维维护它们最终对应的位置和加减情况即可。</p>
