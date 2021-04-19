@@ -1,32 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Matrix67 博客笔记</title>
+    <url>/2021/04/19/Matrix67-%E5%8D%9A%E5%AE%A2%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h2 id="4-19"><a href="#4-19" class="headerlink" title="4.19"></a>4.19</h2><h3 id="面积与格点"><a href="#面积与格点" class="headerlink" title="面积与格点"></a>面积与格点</h3><h4 id="题面"><a href="#题面" class="headerlink" title="题面"></a>题面</h4><p>设想一个平面上布满间距为 $1$ 的横纵直线，形成由一个个 $1\times 1$ 正方形组成的网格。任意给一个面积小于 $1$ 个单位的图形，证明这个图形总能放在网格中而不包含任何一个格点。</p>
+<a id="more"></a>
+<h4 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h4><p>将该图形 $A$ 先随意放置于网格中，之后将每一个彼此分开，位于网格上的 $A$ 也一起分开，将 $1\times 1$ 的格子只通过平移堆叠在一起，所有 $A$ 的部分取并集，由于 $S_A&lt;1$，所以一定存在一点满足该点没有被 $A$ 的部分的并覆盖，我们将该点集还原于原网格，在这个点集的基础上构造新的网格即可。</p>
+<h4 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h4><p><strong>Blichfeldt 定理</strong>：一个面积为 $A$ 的闭区域 $F$ 一定存在大小为 $\lceil A\rceil$ 的点集，满足点集内部的点两两之间横纵坐标差为整数。</p>
+<p>同样将所有网格堆叠在一起，假设最多只存在 $\lceil A\rceil-1$ 个格点，那么对于所有点而言，每个点最多只被 $\lceil A\rceil-1$ 个点覆盖，所以 $S_F\le\lceil A\rceil-1&lt; A$，矛盾。</p>
+<p><strong>Minkowski 定理</strong>：坐标平面上任何含 $(0,0)$ 且中心对称的凸包 $F$ 满足 $S_F&gt;4$ 一定含有异于原点的整点。</p>
+<p>由 <strong>Blichfeldt 定理</strong> 可知，$F$ 内至少有 $2$ 个点满足横纵坐标差为偶数（先放缩），记为 $(x,y),(x+p,y+q)$，由于中心对称，所以存在 $(-x-p,-y-q)\in F$，由于 $F$ 为凸包，取中点得 $(\dfrac{p}{2},\dfrac{q}{2})\in F$，故存在。</p>
+<p>这两个定理都可以拓展到 $\mathbb{R}^n$ 的形式，在密码学中有应用。</p>
+]]></content>
+      <categories>
+        <category>学不明白的东西</category>
+      </categories>
+  </entry>
+  <entry>
     <title>循环、模、单位根的思考</title>
     <url>/2021/02/22/%E5%BE%AA%E7%8E%AF%E3%80%81%E6%A8%A1%E3%80%81%E5%8D%95%E4%BD%8D%E6%A0%B9%E7%9A%84%E6%80%9D%E8%80%83/</url>
     <content><![CDATA[<p>今天用多项式的角度重新审视 <code>[六省联考2017]组合数问题</code> 这道题。</p>
 <p>题干要求</p>
-<p>$$<br>\sum_{i\mod k=r}\dbinom{nk}{i}<br>$$</p>
+<p>$$<br>\sum_{i\bmod k=r}\dbinom{nk}{i}<br>$$</p>
 <p>的值。</p>
 <a id="more"></a>
 <p>前年做这一道题是直接看了题解，通过找与之等价的组合意义完成的，现在让我们重新做一遍。</p>
 <p>很容易化简得到</p>
-<p>$$<br>\sum_{i\mod k=r}\lbrack x^i\rbrack(1+x)^{nk}<br>$$</p>
+<p>$$<br>\sum_{i\bmod k=r}\lbrack x^i\rbrack(1+x)^{nk}<br>$$</p>
 <p>现在看来这个式子意义十分显然，即 $(1+x)^{nk}$ 做 $k$ 循环卷积即可。关于循环卷积运算，一直以来有对其正确性的疑问，但现在似乎是搞明白了。</p>
 <p>假设 $D_k$ 是对多项式进行约化的算子，即 </p>
-<p>$$<br>D_k(f)=\sum_i([x^i]f)x^{i\mod k}<br>$$</p>
+<p>$$<br>D_k(f)=\sum_i([x^i]f)x^{i\bmod k}<br>$$</p>
 <p>而 $\circ$ 表示循环卷积的算符，很容易验证其对 $+$ 有分配律。</p>
 <p>下面讨论命题</p>
 <p>$$<br>D_k(f\times g)=D_k(f)\circ D_k(g)<br>$$</p>
 <p>的正确性。</p>
 <p>我们对左式展开</p>
-<p>$$<br>\begin{aligned}<br>D_k(f\times g)&amp;=\sum_i([x^i](f\times g))x^{i\mod k}\\<br>&amp;=\sum_a\sum_b([x^a]f\times[x^b]g)x^{a+b\mod k}\\<br>&amp;=\sum_a ([x^a]f)x^{a\mod k}\circ \sum_{b}([x^b]f)x^{b\mod k}\\<br>&amp;=D_k(f)\circ D_k(g)<br>\end{aligned}<br>$$</p>
+<p>$$<br>\begin{aligned}<br>D_k(f\times g)&amp;=\sum_i([x^i](f\times g))x^{i\bmod k}\\<br>&amp;=\sum_a\sum_b([x^a]f\times[x^b]g)x^{a+b\bmod k}\\<br>&amp;=\sum_a ([x^a]f)x^{a\bmod k}\circ \sum_{b}([x^b]f)x^{b\bmod k}\\<br>&amp;=D_k(f)\circ D_k(g)<br>\end{aligned}<br>$$</p>
 <p>而今天看到 $\mathrm{jiangly}$ 对 $D_k$ 有另外的表述即</p>
-<p>$$<br>D_k(f)=f\mod x^k-1<br>$$</p>
+<p>$$<br>D_k(f)=f\bmod x^k-1<br>$$</p>
 <p>这是我第一次见到这样的表述，题解没有细说，它的正确性我口胡了一个证明。</p>
-<p>容易验证多项式模运算与整数模运算性质类似，我们不妨考虑 $x^n\mod x^k-1$ 的值，显然有</p>
-<p>$$<br>x^n=(\sum_{i=1}^{\lfloor\frac{n}{k}\rfloor}x^{n-ik})(x^k-1)+x^{n\mod k}<br>$$</p>
-<p>即 $x^n\equiv x^{n\mod k}\mod x^k-1$ 。</p>
-<p>所以对最开始命题的正确性可以用 $\mod x^k-1$ 相关运算的性质来说明。</p>
+<p>容易验证多项式模运算与整数模运算性质类似，我们不妨考虑 $x^n\bmod x^k-1$ 的值，显然有</p>
+<p>$$<br>x^n=(\sum_{i=1}^{\lfloor\frac{n}{k}\rfloor}x^{n-ik})(x^k-1)+x^{n\bmod k}<br>$$</p>
+<p>即 $x^n\equiv x^{n\bmod k}\bmod x^k-1$ 。</p>
+<p>所以对最开始命题的正确性可以用 $\bmod x^k-1$ 相关运算的性质来说明。</p>
 <p>另外，在看到这道题时，还有一个思路就是单位根反演，即</p>
 <p>$$<br>[n|k]=\dfrac{1}{n}\sum_{i=0}^{n-1}\omega_n^{ik}<br>$$</p>
 <p>我们将此式联系题目，即</p>
@@ -155,440 +171,7 @@
     <content><![CDATA[<p><del>希望不要丢人</del></p>
 <a id="more"></a>
 
-<table>
-<thead>
-<tr>
-<th align="center">试题一</th>
-<th align="center">完成情况</th>
-<th align="center">试题二</th>
-<th align="center">完成情况</th>
-<th align="center">试题三</th>
-<th align="center">完成情况</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">UC</td>
-<td align="center"></td>
-<td align="center">DG</td>
-<td align="center"></td>
-<td align="center">RB</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">HC</td>
-<td align="center"></td>
-<td align="center">IB</td>
-<td align="center"></td>
-<td align="center">FJ</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">GK</td>
-<td align="center"></td>
-<td align="center">UH</td>
-<td align="center"></td>
-<td align="center">QH</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">EE</td>
-<td align="center"></td>
-<td align="center">DJ</td>
-<td align="center"></td>
-<td align="center">IH</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">HL</td>
-<td align="center"></td>
-<td align="center">MI</td>
-<td align="center"></td>
-<td align="center">EJ</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">MB</td>
-<td align="center"></td>
-<td align="center">UI</td>
-<td align="center"></td>
-<td align="center">ED</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">AA</td>
-<td align="center"></td>
-<td align="center">BG</td>
-<td align="center"></td>
-<td align="center">ML</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">CF</td>
-<td align="center"></td>
-<td align="center">TE</td>
-<td align="center"></td>
-<td align="center">QG</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">PH</td>
-<td align="center"></td>
-<td align="center">UJ</td>
-<td align="center"></td>
-<td align="center">BB</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">CI</td>
-<td align="center"></td>
-<td align="center">SD</td>
-<td align="center"></td>
-<td align="center">NG</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">DK</td>
-<td align="center"></td>
-<td align="center">LD</td>
-<td align="center"></td>
-<td align="center">IJ</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">NC</td>
-<td align="center"></td>
-<td align="center">BJ</td>
-<td align="center"></td>
-<td align="center">FK</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">CH</td>
-<td align="center"></td>
-<td align="center">NJ</td>
-<td align="center"></td>
-<td align="center">RH</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">QF</td>
-<td align="center"></td>
-<td align="center">BE</td>
-<td align="center"></td>
-<td align="center">KI</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">AC</td>
-<td align="center"></td>
-<td align="center">PG</td>
-<td align="center"></td>
-<td align="center">HM</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">PJ</td>
-<td align="center"></td>
-<td align="center">ID</td>
-<td align="center"></td>
-<td align="center">EG</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">SI</td>
-<td align="center"></td>
-<td align="center">KC</td>
-<td align="center"></td>
-<td align="center"><a href="http://codeforces.com/gym/101630">GI</a></td>
-<td align="center"><a href="https://ctp314.github.io/2019/07/10/CERC2017-Intrinsic-Interval/">$\color{green}{√}$</a></td>
-</tr>
-<tr>
-<td align="center">OG</td>
-<td align="center"></td>
-<td align="center">CK</td>
-<td align="center"></td>
-<td align="center">DB</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center"><a href="https://codeforces.com/gym/101612/">QE</a></td>
-<td align="center">$\color{red}{×}$</td>
-<td align="center">GH</td>
-<td align="center"></td>
-<td align="center">NI</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">OL</td>
-<td align="center"></td>
-<td align="center">KA</td>
-<td align="center"></td>
-<td align="center">MG</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">SG</td>
-<td align="center"></td>
-<td align="center">NL</td>
-<td align="center"></td>
-<td align="center">KH</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">QJ</td>
-<td align="center"></td>
-<td align="center">KG</td>
-<td align="center"></td>
-<td align="center">AB</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">KD</td>
-<td align="center"></td>
-<td align="center">IL</td>
-<td align="center"></td>
-<td align="center">NF</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">CM</td>
-<td align="center"></td>
-<td align="center">NE</td>
-<td align="center"></td>
-<td align="center">HD</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">DH</td>
-<td align="center"></td>
-<td align="center">EC</td>
-<td align="center"></td>
-<td align="center">BM</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">LC</td>
-<td align="center"></td>
-<td align="center">CD</td>
-<td align="center"></td>
-<td align="center">JI</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">DL</td>
-<td align="center"></td>
-<td align="center">ME</td>
-<td align="center"></td>
-<td align="center">PE</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">LI</td>
-<td align="center"></td>
-<td align="center">AI</td>
-<td align="center"></td>
-<td align="center">RJ</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">SF</td>
-<td align="center"></td>
-<td align="center">II</td>
-<td align="center"></td>
-<td align="center">HG</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">RE</td>
-<td align="center"></td>
-<td align="center">LL</td>
-<td align="center"></td>
-<td align="center">OA</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">FB</td>
-<td align="center"></td>
-<td align="center">QD</td>
-<td align="center"></td>
-<td align="center">DA</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">TC</td>
-<td align="center"></td>
-<td align="center">AE</td>
-<td align="center"></td>
-<td align="center">CB</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">GF</td>
-<td align="center"></td>
-<td align="center">AG</td>
-<td align="center"></td>
-<td align="center">JC</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">PA</td>
-<td align="center"></td>
-<td align="center">TH</td>
-<td align="center"></td>
-<td align="center">EH</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">AJ</td>
-<td align="center"></td>
-<td align="center">TK</td>
-<td align="center"></td>
-<td align="center">EI</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">UL</td>
-<td align="center"></td>
-<td align="center">AF</td>
-<td align="center"></td>
-<td align="center">SK</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">BH</td>
-<td align="center"></td>
-<td align="center">RD</td>
-<td align="center"></td>
-<td align="center">OK</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">FC</td>
-<td align="center"></td>
-<td align="center">JD</td>
-<td align="center"></td>
-<td align="center">OE</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">TF</td>
-<td align="center"></td>
-<td align="center">FF</td>
-<td align="center"></td>
-<td align="center">DD</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">CJ</td>
-<td align="center"></td>
-<td align="center">HK</td>
-<td align="center"></td>
-<td align="center">MJ</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">FG</td>
-<td align="center"></td>
-<td align="center">GL</td>
-<td align="center"></td>
-<td align="center">AL</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">FI</td>
-<td align="center"></td>
-<td align="center">IC</td>
-<td align="center"></td>
-<td align="center">QC</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">MD</td>
-<td align="center"></td>
-<td align="center">OJ</td>
-<td align="center"></td>
-<td align="center">HI</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">KK</td>
-<td align="center"></td>
-<td align="center">JH</td>
-<td align="center"></td>
-<td align="center">OB</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">BK</td>
-<td align="center"></td>
-<td align="center">GJ</td>
-<td align="center"></td>
-<td align="center">KE</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">CA</td>
-<td align="center"></td>
-<td align="center">IK</td>
-<td align="center"></td>
-<td align="center">LE</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">RI</td>
-<td align="center"></td>
-<td align="center">LK</td>
-<td align="center"></td>
-<td align="center">PD</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">JE</td>
-<td align="center"></td>
-<td align="center">LB</td>
-<td align="center"></td>
-<td align="center">HB</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center"><a href="http://codeforces.com/gym/101239">BL</a></td>
-<td align="center"><a href="https://ctp314.github.io/2020/10/12/WF2015L-Weather-Report/">$\color{green}{√}$</a></td>
-<td align="center"><a href="https://codeforces.com/gym/101142">RG</a></td>
-<td align="center"><a href="https://ctp314.github.io/2020/10/13/NEERC2016-NR-G-Gangsters-in-Central-City/">$\color{green}{√}$</a></td>
-<td align="center"><a href="http://codeforces.com/gym/101221">AH</a></td>
-<td align="center"><a href="https://ctp314.github.io/2020/10/14/WF2014H-Pachinko/">$\color{green}{√}$</a></td>
-</tr>
-<tr>
-<td align="center">AK</td>
-<td align="center"></td>
-<td align="center">GG</td>
-<td align="center"></td>
-<td align="center">JG</td>
-<td align="center"></td>
-</tr>
-</tbody></table>
-<p>$\color{green}{√}$ 主要是自己完成，$\color{red}{×}$ 主要是抄题解</p>
-<p><a href="http://codeforces.com/gym/101221">A 2014 ACM-ICPC World Finals</a> : ABCEFGHIJKL</p>
-<p><a href="http://codeforces.com/gym/101239">B 2015 ACM-ICPC World Finals</a> : BEGHJKLM</p>
-<p><a href="http://codeforces.com/gym/101242">C 2016 ACM-ICPC World Finals</a> : ABDFHIJKM</p>
-<p><a href="http://codeforces.com/gym/101471">D 2017 ACM-ICPC World Finals</a> : ABDGHJKL</p>
-<p><a href="http://codeforces.com/gym/102482">E 2018 ACM-ICPC World Finals</a> : CDEGHIJ</p>
-<p><a href="http://codeforces.com/gym/102511">F 2019 ICPC World Finals</a> : BCFGIJK</p>
-<p><a href="http://codeforces.com/gym/101630">G 2017-2018 ACM-ICPC Northern Eurasia (Northeastern European Regional) Contest (NEERC17)</a> : FGHIJKL</p>
-<p><a href="http://codeforces.com/gym/101190">H 2016-2017 ACM-ICPC Northeastern European Regional Contest (NEERC 16)</a> : BCDGIKLM</p>
-<p><a href="http://codeforces.com/gym/100851">I 2015-2016 ACM-ICPC Northeastern European Regional Contest (NEERC 15)</a> : BCDHIJKL</p>
-<p><a href="http://codeforces.com/gym/100553">J 2014-2015 ACM-ICPC Northeastern European Regional Contest (NEERC 14)</a> : CDEGHI</p>
-<p><a href="http://codeforces.com/gym/100307">K 2013-2014 ACM-ICPC Northeastern European Regional Contest (NEERC 13)</a> : ACDEGHIK</p>
-<p><a href="http://codeforces.com/gym/101620">L 2017-2018 ACM-ICPC, Central Europe Regional Contest (CERC 17)</a> : BCDEIKL</p>
-<p><a href="http://codeforces.com/gym/101173">M 2016-2017 ACM-ICPC, Central Europe Regional Contest (CERC 16)</a> : BDEGIJL</p>
-<p><a href="http://codeforces.com/gym/101480">N 2015-2016 ACM-ICPC, Central Europe Regional Contest (CERC 15)</a> : CEFGIJL</p>
-<p><a href="http://codeforces.com/gym/100543">O 2014-2015 ACM-ICPC, Central Europe Regional Contest (CERC 14)</a> : ABEGJKL</p>
-<p><a href="http://codeforces.com/gym/100299">P 2013-2014 ACM ICPC, Central Europe Regional Contest (CERC 13)</a> : ADEGHJ</p>
-<p><a href="http://codeforces.com/gym/101612">Q 2017-2018 ACM-ICPC, NEERC, Northern Subregional Contest</a> : CDEFGHJ</p>
-<p><a href="http://codeforces.com/gym/101142">R 2016-2017 ACM-ICPC, NEERC, Northern Subregional Contess</a> : BDEGHIJ</p>
-<p><a href="http://codeforces.com/gym/100801">S 2015-2016 ACM-ICPC, NEERC, Northern Subregional Contest</a> : DFGIK</p>
-<p><a href="http://codeforces.com/gym/100531">T 2014-2015 ACM-ICPC, NEERC, Northern Subregional Contest</a> : CEFHK</p>
-<p><a href="http://codeforces.com/gym/100269">U 2013-2014 ACM-ICPC, NEERC, Northern Subregional Contest</a> : CHIJL</p>
+<p>这篇文章咕了，而且已经丢人了。</p>
 ]]></content>
       <categories>
         <category>题解</category>

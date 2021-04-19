@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"ctp314.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="今天用多项式的角度重新审视 [六省联考2017]组合数问题 这道题。 题干要求 $$\sum_{i\mod k&#x3D;r}\dbinom{nk}{i}$$ 的值。">
+  <meta name="description" content="今天用多项式的角度重新审视 [六省联考2017]组合数问题 这道题。 题干要求 $$\sum_{i\bmod k&#x3D;r}\dbinom{nk}{i}$$ 的值。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="循环、模、单位根的思考">
 <meta property="og:url" content="https://ctp314.github.io/2021/02/22/%E5%BE%AA%E7%8E%AF%E3%80%81%E6%A8%A1%E3%80%81%E5%8D%95%E4%BD%8D%E6%A0%B9%E7%9A%84%E6%80%9D%E8%80%83/index.html">
 <meta property="og:site_name" content="CTime_Pup_314">
-<meta property="og:description" content="今天用多项式的角度重新审视 [六省联考2017]组合数问题 这道题。 题干要求 $$\sum_{i\mod k&#x3D;r}\dbinom{nk}{i}$$ 的值。">
+<meta property="og:description" content="今天用多项式的角度重新审视 [六省联考2017]组合数问题 这道题。 题干要求 $$\sum_{i\bmod k&#x3D;r}\dbinom{nk}{i}$$ 的值。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-02-22T08:41:32.000Z">
-<meta property="article:modified_time" content="2021-02-22T10:11:51.707Z">
+<meta property="article:modified_time" content="2021-04-19T01:55:41.816Z">
 <meta property="article:author" content="CTime_Pup_314">
 <meta name="twitter:card" content="summary">
 
@@ -216,10 +216,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-02-22 16:41:32 / 修改时间：18:11:51" itemprop="dateCreated datePublished" datetime="2021-02-22T16:41:32+08:00">2021-02-22</time>
+              <time title="创建时间：2021-02-22 16:41:32" itemprop="dateCreated datePublished" datetime="2021-02-22T16:41:32+08:00">2021-02-22</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-19 09:55:41" itemprop="dateModified" datetime="2021-04-19T09:55:41+08:00">2021-04-19</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -264,28 +270,28 @@
       
         <p>今天用多项式的角度重新审视 <code>[六省联考2017]组合数问题</code> 这道题。</p>
 <p>题干要求</p>
-<p>$$<br>\sum_{i\mod k=r}\dbinom{nk}{i}<br>$$</p>
+<p>$$<br>\sum_{i\bmod k=r}\dbinom{nk}{i}<br>$$</p>
 <p>的值。</p>
 <a id="more"></a>
 <p>前年做这一道题是直接看了题解，通过找与之等价的组合意义完成的，现在让我们重新做一遍。</p>
 <p>很容易化简得到</p>
-<p>$$<br>\sum_{i\mod k=r}\lbrack x^i\rbrack(1+x)^{nk}<br>$$</p>
+<p>$$<br>\sum_{i\bmod k=r}\lbrack x^i\rbrack(1+x)^{nk}<br>$$</p>
 <p>现在看来这个式子意义十分显然，即 $(1+x)^{nk}$ 做 $k$ 循环卷积即可。关于循环卷积运算，一直以来有对其正确性的疑问，但现在似乎是搞明白了。</p>
 <p>假设 $D_k$ 是对多项式进行约化的算子，即 </p>
-<p>$$<br>D_k(f)=\sum_i([x^i]f)x^{i\mod k}<br>$$</p>
+<p>$$<br>D_k(f)=\sum_i([x^i]f)x^{i\bmod k}<br>$$</p>
 <p>而 $\circ$ 表示循环卷积的算符，很容易验证其对 $+$ 有分配律。</p>
 <p>下面讨论命题</p>
 <p>$$<br>D_k(f\times g)=D_k(f)\circ D_k(g)<br>$$</p>
 <p>的正确性。</p>
 <p>我们对左式展开</p>
-<p>$$<br>\begin{aligned}<br>D_k(f\times g)&amp;=\sum_i([x^i](f\times g))x^{i\mod k}\\<br>&amp;=\sum_a\sum_b([x^a]f\times[x^b]g)x^{a+b\mod k}\\<br>&amp;=\sum_a ([x^a]f)x^{a\mod k}\circ \sum_{b}([x^b]f)x^{b\mod k}\\<br>&amp;=D_k(f)\circ D_k(g)<br>\end{aligned}<br>$$</p>
+<p>$$<br>\begin{aligned}<br>D_k(f\times g)&amp;=\sum_i([x^i](f\times g))x^{i\bmod k}\\<br>&amp;=\sum_a\sum_b([x^a]f\times[x^b]g)x^{a+b\bmod k}\\<br>&amp;=\sum_a ([x^a]f)x^{a\bmod k}\circ \sum_{b}([x^b]f)x^{b\bmod k}\\<br>&amp;=D_k(f)\circ D_k(g)<br>\end{aligned}<br>$$</p>
 <p>而今天看到 $\mathrm{jiangly}$ 对 $D_k$ 有另外的表述即</p>
-<p>$$<br>D_k(f)=f\mod x^k-1<br>$$</p>
+<p>$$<br>D_k(f)=f\bmod x^k-1<br>$$</p>
 <p>这是我第一次见到这样的表述，题解没有细说，它的正确性我口胡了一个证明。</p>
-<p>容易验证多项式模运算与整数模运算性质类似，我们不妨考虑 $x^n\mod x^k-1$ 的值，显然有</p>
-<p>$$<br>x^n=(\sum_{i=1}^{\lfloor\frac{n}{k}\rfloor}x^{n-ik})(x^k-1)+x^{n\mod k}<br>$$</p>
-<p>即 $x^n\equiv x^{n\mod k}\mod x^k-1$ 。</p>
-<p>所以对最开始命题的正确性可以用 $\mod x^k-1$ 相关运算的性质来说明。</p>
+<p>容易验证多项式模运算与整数模运算性质类似，我们不妨考虑 $x^n\bmod x^k-1$ 的值，显然有</p>
+<p>$$<br>x^n=(\sum_{i=1}^{\lfloor\frac{n}{k}\rfloor}x^{n-ik})(x^k-1)+x^{n\bmod k}<br>$$</p>
+<p>即 $x^n\equiv x^{n\bmod k}\bmod x^k-1$ 。</p>
+<p>所以对最开始命题的正确性可以用 $\bmod x^k-1$ 相关运算的性质来说明。</p>
 <p>另外，在看到这道题时，还有一个思路就是单位根反演，即</p>
 <p>$$<br>[n|k]=\dfrac{1}{n}\sum_{i=0}^{n-1}\omega_n^{ik}<br>$$</p>
 <p>我们将此式联系题目，即</p>
@@ -309,7 +315,10 @@
     <a href="/2020/12/20/CFR691D2-%E9%A2%98%E8%A7%A3/" rel="prev" title="CFR691D2 题解">
       <i class="fa fa-chevron-left"></i> CFR691D2 题解
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/04/19/Matrix67-%E5%8D%9A%E5%AE%A2%E7%AC%94%E8%AE%B0/" rel="next" title="Matrix67 博客笔记">
+      Matrix67 博客笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -384,14 +393,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-count">67</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
