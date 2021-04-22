@@ -11,6 +11,8 @@
 <p><strong>Minkowski 定理</strong>：坐标平面上任何含 $(0,0)$ 且中心对称的凸包 $F$ 满足 $S_F&gt;4$ 一定含有异于原点的整点。</p>
 <p>由 <strong>Blichfeldt 定理</strong> 可知，$F$ 内至少有 $2$ 个点满足横纵坐标差为偶数（先放缩），记为 $(x,y),(x+p,y+q)$，由于中心对称，所以存在 $(-x-p,-y-q)\in F$，由于 $F$ 为凸包，取中点得 $(\dfrac{p}{2},\dfrac{q}{2})\in F$，故存在。</p>
 <p>这两个定理都可以拓展到 $\mathbb{R}^n$ 的形式，在密码学中有应用。</p>
+<h2 id="4-19-1"><a href="#4-19-1" class="headerlink" title="4.19"></a>4.19</h2><h3 id="升维"><a href="#升维" class="headerlink" title="升维"></a>升维</h3><h4 id="题面-1"><a href="#题面-1" class="headerlink" title="题面"></a>题面</h4><p>平面上四条直线，任两条不平行，任三条不共点。四个旅行者 $A,B,C,D$ 分别匀速地走在这四条直线上（他们的速度可以不相同）。若 $A$ 在行走过程中与 $B,C,D$ 相遇，$B$ 在行走过程后与 $C,D$ 相遇（当然也遇见了 $A$），$A,B,C$ 不同时相遇，$A,B,D$ 不同时相遇，求证：$C,D$ 在行走过程中相遇。</p>
+<h4 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h4><p>引入时间 $t$ 轴垂直于平面，每个人的位置可以唯一表示为一条直线 $l(x,y,t)$，由于 $A,B$ 相遇，则 $l_A$ 交与 $l_B$ 确定了平面 $F$，由于 $C$ 与 $l_A$ 和 $l_B$ 有互异的两个交点，故 $l_C\subset F$，同理 $l_D\subset F$，$l_C$ 与 $l_D$ 不平行必有交点。 </p>
 ]]></content>
       <categories>
         <category>学不明白的东西</category>
