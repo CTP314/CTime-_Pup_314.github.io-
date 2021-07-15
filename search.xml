@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>组合趣题合集</title>
+    <url>/2021/07/15/%E7%BB%84%E5%90%88%E8%B6%A3%E9%A2%98%E5%90%88%E9%9B%86/</url>
+    <content><![CDATA[<h2 id="7-15"><a href="#7-15" class="headerlink" title="7.15"></a>7.15</h2><h3 id="一列"><a href="#一列" class="headerlink" title="一列"></a>一列</h3><h4 id="题面"><a href="#题面" class="headerlink" title="题面"></a>题面</h4><p>设有 $2^{n-1}$ 个不同的数列，每个数列有 $n$ 项，每项都等于 $0$ 或 $1$。已知，对于这些数列任意 $3$个数列，都存在正整数 $p$，使得这 $3$ 个数列的第 $p$ 项都为 $1$，证明存在唯一的正整数 $k$，使得对所有 $2^{n-1}$ 个数列的第 $k$ 项都等于 $1$。</p>
+<a id="more"></a>
+<h4 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h4><p>记 $S$ 为这 $2^{n-1}$ 个不同序列构成的集合，那么 $S\subseteq \lbrace0,1\rbrace^n$，定义元素之间的按位与运算 $\circ$，和按位取反运算 $\overline{\mathrm{x}}$。</p>
+<p>首先证明 $(0,0,\dotsc,0)\notin S$，否则任取其余两个元素 $\mathrm{x}$ 和 $\mathrm{y}$，则 $\mathrm{x}\circ\mathrm{y}\circ\mathrm{0}=\mathrm{0}$；</p>
+<p>再证明若 $\mathrm{x}$，则 $\overline{\mathrm{x}}\notin S$，否则取 $\mathrm{x}\circ\overline{\mathrm{x}}\circ\mathrm{y}=\mathrm{0}$，矛盾。得到推论 $(\mathrm{x},\overline{\mathrm{x}})$ 必有其一 $\in S$，否则不足 $2^{n-1}$ 个；</p>
+<p>最后证明，若 $\mathrm{x},\mathrm{y}\in S$，则 $\mathrm{x}\circ\mathrm{y}\in S$，否则 $\overline{\mathrm{x}\circ\mathrm{y}}\in S$，则 $x\circ y\circ \overline{\mathrm{x}\circ\mathrm{y}}=\mathrm{0}$ 矛盾。</p>
+<p>所以 $\bigcirc_{\mathrm{x}\in S}\mathrm{x}$ 不为 $\mathrm{0}$，若有 $k$ 个位置为 $1$，则 $|S|$ 最大只能为 $2^{n-k}$，故 $k$ 只能为 $1$。</p>
+]]></content>
+      <categories>
+        <category>学不明白的东西</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Matrix67 博客笔记</title>
     <url>/2021/04/19/Matrix67-%E5%8D%9A%E5%AE%A2%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<h2 id="4-19"><a href="#4-19" class="headerlink" title="4.19"></a>4.19</h2><h3 id="面积与格点"><a href="#面积与格点" class="headerlink" title="面积与格点"></a>面积与格点</h3><h4 id="题面"><a href="#题面" class="headerlink" title="题面"></a>题面</h4><p>设想一个平面上布满间距为 $1$ 的横纵直线，形成由一个个 $1\times 1$ 正方形组成的网格。任意给一个面积小于 $1$ 个单位的图形，证明这个图形总能放在网格中而不包含任何一个格点。</p>
